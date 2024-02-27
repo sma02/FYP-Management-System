@@ -1,0 +1,14 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+
+    <SolidColorBrush Color="WhiteSmoke" x:Key="TextColor"/>
+    <SolidColorBrush Color="#2A2A2A" x:Key="BackgroundColor"/>
+    <SolidColorBrush Color="#FF252323" x:Key="BackgroundColor2"/>
+    <SolidColorBrush Color="#FF383838" x:Key="BackgroundColor3"/>
+    <SolidColorBrush Color="#494C49" x:Key="BackgroundColorBar"/>
+    <SolidColorBrush Color="#424242" x:Key="Control"/>
+    <SolidColorBrush Color="#999999" x:Key="ControlMouseOver"/>
+    <SolidColorBrush Color="#FF787878" x:Key="ControlPressed"/>
+    
+</ResourceDictionary>

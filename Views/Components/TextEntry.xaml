@@ -1,0 +1,32 @@
+﻿<UserControl x:Class="FYP_Management_System.Views.Components.TextEntry"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:FYP_Management_System.Views.Components"
+             mc:Ignorable="d" 
+             d:DesignWidth="200">
+    <Grid>
+        <StackPanel Margin="20 10">
+         <TextBlock Margin="13 0"
+                    Name="TextBlockLabel"
+                    FontSize="12" 
+                    Text="{Binding LabelText}"
+                    Foreground="{DynamicResource TextColor}"
+                    HorizontalAlignment="Stretch"
+                    IsHitTestVisible="False"/>
+        <TextBox Name="TextBoxText"
+                 MaxLength="{Binding MaxLenght}"
+                 Margin="10 5 10 10"
+                 FontSize="14px"
+                 Padding="10 8"
+                 BorderThickness="1"
+                 BorderBrush="Gray"
+                 HorizontalAlignment="Stretch" 
+                 TextWrapping="Wrap" 
+                 Background="{DynamicResource ControlPressed}"
+                 Foreground="{DynamicResource TextColor}" 
+                 Text="{Binding Text}"/>
+        </StackPanel>
+    </Grid>
+</UserControl>

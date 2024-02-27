@@ -24,16 +24,24 @@ namespace FYP_Management_System
     {
         public MainWindow()
         {
+            Configuration.getInstance().getConnection();
             InitializeComponent();
         }
         private void BtnManageStudents_Click(object sender, RoutedEventArgs e)
         {
-            var conn = Configuration.getInstance().getConnection();
-            SqlCommand command = new SqlCommand("SELECT * FROM Person", conn);
-            SqlDataAdapter adapter = new SqlDataAdapter(command);
-            DataTable table = new DataTable();
-            adapter.Fill(table);
-            DG1.ItemsSource = table.DefaultView;
+            ContentFrame.Source = new Uri("/Views/StudentView.xaml", UriKind.Relative);
+
+        }
+
+        private void BtnDashboard_Click(object sender, RoutedEventArgs e)
+        {
+            ContentFrame.Source = new Uri("/Views/ProjectView.xaml", UriKind.Relative);
+
+        }
+
+        private void BtnAddStudent_Click(object sender, RoutedEventArgs e)
+        {
+            ContentFrame.Source = new Uri("/Views/StudentEntryView.xaml", UriKind.Relative);
         }
     }
 }

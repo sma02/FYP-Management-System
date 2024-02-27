@@ -4,6 +4,12 @@
              xmlns:local="clr-namespace:FYP_Management_System"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Views/Themes/Dark.xaml"/>
+                <ResourceDictionary Source="Views/ComponentsStyle/DataGrid.xaml"/>
+                <ResourceDictionary Source="Views/ComponentsStyle/Button.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
     </Application.Resources>
 </Application>

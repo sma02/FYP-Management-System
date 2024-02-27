@@ -6,11 +6,8 @@
     <RootNamespace>FYP_Management_System</RootNamespace>
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
+    <UseWindowsForms>False</UseWindowsForms>
   </PropertyGroup>
-
-  <ItemGroup>
-    <Folder Include="Views\Components\" />
-  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Data.SqlClient" Version="5.1.5" />
