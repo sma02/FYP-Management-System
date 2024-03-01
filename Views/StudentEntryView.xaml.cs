@@ -46,7 +46,7 @@ namespace FYP_Management_System.Views.Components
             }
         }
 
-        private void BtnAdd_Click(object sender, RoutedEventArgs e)
+        private void ButtonAdd_Click(object sender, RoutedEventArgs e)
         {
             var conn = Configuration.getInstance().getConnection();
             SqlCommand command = new SqlCommand(@"BEGIN TRANSACTION
@@ -66,9 +66,9 @@ namespace FYP_Management_System.Views.Components
             command.ExecuteNonQuery();
         }
 
-        private void BtnCancel_Click(object sender, RoutedEventArgs e)
+        private void ButtonCancel_Click(object sender, RoutedEventArgs e)
         {
-
+            NavigationService.Source= new Uri("/Views/StudentView.xaml", UriKind.Relative);
         }
     }
 }

@@ -52,6 +52,8 @@
                 <Grid Margin="10 0 0 0">
                     <Button  Name="BtnAddStudent" Style="{DynamicResource SideBarButton}" Background="DarkGray" Height="20px" Content="Add Student" Click="BtnAddStudent_Click"/>
                 </Grid>
+                <Button  Name="BtnManageProjects" Style="{DynamicResource SideBarButton}" Content="Manage Projects" Click="BtnManageProjects_Click"/>
+                <Button  Name="BtnManageAdvisors" Style="{DynamicResource SideBarButton}" Content="Manage Advisors" Click="BtnManageAdvisors_Click"/>
             </StackPanel>
             <Frame Name="ContentFrame" Grid.Column="2" NavigationUIVisibility="Hidden" />
         </Grid>

@@ -9,7 +9,22 @@
       Title="StudentView">
 
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="200"/>
+        </Grid.ColumnDefinitions>
         <DataGrid Name="DG1">
         </DataGrid>
+        <Grid Grid.Column="1">
+            <StackPanel VerticalAlignment="Center">
+                <StackPanel.Resources>
+                    <Style TargetType="{x:Type Button}" BasedOn="{StaticResource SideBarButton}">
+                        <Setter Property="Margin" Value="10 40px"/>
+                    </Style>
+                </StackPanel.Resources>
+                <Button Click="Button_Click" Content="Add Student"/>
+                <Button Content="Delete Student"/>
+            </StackPanel>
+        </Grid>
     </Grid>
 </Page>

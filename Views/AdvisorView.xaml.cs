@@ -18,29 +18,20 @@ using System.Windows.Shapes;
 namespace FYP_Management_System.Views
 {
     /// <summary>
-    /// Interaction logic for StudentView.xaml
+    /// Interaction logic for AdvisorView.xaml
     /// </summary>
-    public partial class StudentView : Page
+    public partial class AdvisorView : UserControl
     {
-        public StudentView()
+        public AdvisorView()
         {
             InitializeComponent();
             var conn = Configuration.getInstance().getConnection();
-            SqlCommand command = new SqlCommand(@"SELECT RegistrationNo,FirstName,LastName,Lookup.Value Gender,Contact,Email,CONVERT(DATE,DateOfBirth) DateOfBirth
-                                                  FROM Person 
-                                                  JOIN Student 
-                                                  ON Student.ID=Person.ID
-                                                  JOIN Lookup
-                                                  ON Gender=Lookup.Id AND Lookup.Category='GENDER'", conn);
+            SqlCommand command = new SqlCommand(@"SELECT *
+                                                  FROM Advisor", conn);
             SqlDataAdapter adapter = new SqlDataAdapter(command);
             DataTable table = new DataTable();
             adapter.Fill(table);
             DG1.ItemsSource = table.DefaultView;
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            NavigationService.Source = new Uri("/Views/StudentEntryView.xaml", UriKind.Relative);
         }
     }
 }

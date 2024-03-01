@@ -35,13 +35,21 @@ namespace FYP_Management_System
 
         private void BtnDashboard_Click(object sender, RoutedEventArgs e)
         {
-            ContentFrame.Source = new Uri("/Views/ProjectView.xaml", UriKind.Relative);
-
         }
 
         private void BtnAddStudent_Click(object sender, RoutedEventArgs e)
         {
             ContentFrame.Source = new Uri("/Views/StudentEntryView.xaml", UriKind.Relative);
+        }
+
+        private void BtnManageProjects_Click(object sender, RoutedEventArgs e)
+        {
+            ContentFrame.Source = new Uri("/Views/ProjectView.xaml", UriKind.Relative);
+        }
+
+        private void BtnManageAdvisors_Click(object sender, RoutedEventArgs e)
+        {
+            ContentFrame.Source = new Uri("/Views/AdvisorView.xaml", UriKind.Relative);
         }
     }
 }

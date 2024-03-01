@@ -26,7 +26,9 @@ namespace FYP_Management_System.Views
         {
             InitializeComponent();
             var conn = Configuration.getInstance().getConnection();
-            SqlCommand command = new SqlCommand("SELECT * FROM Person JOIN Student ON Student.ID=Person.ID", conn);
+            SqlCommand command = new SqlCommand(@"SELECT Title,Description
+                                                  FROM Project
+                                                  ORDER BY Title", conn);
             SqlDataAdapter adapter = new SqlDataAdapter(command);
             DataTable table = new DataTable();
             adapter.Fill(table);

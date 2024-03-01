@@ -47,8 +47,8 @@
 
 
 
-            <Button Name="BtnAdd" Content="Add" Grid.Row="5" Grid.Column="0" Click="BtnAdd_Click"/>
-            <Button Name="BtnCancel" Content="Cancel" Grid.Row="5" Grid.Column="1" Click="BtnCancel_Click"/>
+            <Button Content="Add" Grid.Row="5" Grid.Column="0" Click="ButtonAdd_Click"/>
+            <Button Content="Cancel" Grid.Row="5" Grid.Column="1" Click="ButtonCancel_Click"/>
         </Grid>
         </ScrollViewer>
         <Grid Grid.Row="1" Margin="150 0">
