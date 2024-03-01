@@ -11,14 +11,29 @@
         <Setter Property="Foreground" Value="#FF9D9E9E"/>
     </Style>
     <Style TargetType="{x:Type DataGridRow}">
-        <Setter Property="Background" Value="#FF5D5F5F"/>
+        <Setter Property="Background" Value="{DynamicResource BackgroundColor}"/>
         <Setter Property="Foreground" Value="#FFE0E0E0"/>
-        <Setter Property="FontSize" Value="12px"/>
-        <Setter Property="VerticalContentAlignment" Value="Center"/>
-        <Setter Property="Height" Value="24px"/>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="{DynamicResource ControlMouseOver2}"/>
+            </Trigger>
+            <Trigger Property="IsSelected" Value="True">
+                <Setter Property="Background" Value="{DynamicResource ControlPressed2}"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+    <Style TargetType="{x:Type DataGridCell}">
+        <Setter Property="FontSize" Value="14px"/>
+        <Style.Triggers>
+            <Trigger Property="IsSelected" Value="True">
+                <Setter Property="Background" Value="{DynamicResource ControlPressed2}"/>
+                <Setter Property="BorderBrush" Value="Transparent"/>
+            </Trigger>
+        </Style.Triggers>
     </Style>
     <Style TargetType="{x:Type DataGrid}">
         <Setter Property="Background" Value="#FF2D2F2F"/>
-
+        <Setter Property="VerticalGridLinesBrush" Value="Transparent"/>
+        <Setter Property="HorizontalGridLinesBrush" Value="Transparent"/>
     </Style>
 </ResourceDictionary>
