@@ -9,6 +9,7 @@
     <SolidColorBrush Color="#3A3A3A" x:Key="BackgroundColor4"/>
     <SolidColorBrush Color="#494C49" x:Key="BackgroundColorBar"/>
     <SolidColorBrush Color="#424242" x:Key="Control"/>
+    <SolidColorBrush Color="#FF434646" x:Key="Control2"/>
     <SolidColorBrush Color="#999999" x:Key="ControlMouseOver"/>
     <SolidColorBrush Color="#4D4D4D" x:Key="ControlMouseOver2"/>
     <SolidColorBrush Color="#FF787878" x:Key="ControlPressed"/>

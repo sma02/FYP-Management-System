@@ -30,12 +30,7 @@ namespace FYP_Management_System.Views.Components
             var conn = Configuration.getInstance().getConnection();
             SqlCommand command = new SqlCommand("SELECT Value FROM Lookup WHERE Category='GENDER'", conn);
             SqlDataReader reader = command.ExecuteReader();
-            while (reader.Read())
-            {
-                genders.Add(reader.GetString(0));
-            }
-            reader.Close();
-            GenderEntry.Items = genders;
+            GenderEntry.ItemsRead = reader;
         }
 
         void NavigationService_Navigating(object sender, NavigatingCancelEventArgs e)

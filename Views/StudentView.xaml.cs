@@ -40,7 +40,7 @@ namespace FYP_Management_System.Views
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            NavigationService.Source = new Uri("/Views/StudentEntryView.xaml", UriKind.Relative);
+            NavigationService.Content = new Views.Components.StudentEntryView();
         }
     }
 }

@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FYP_Management_System"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800" Background="#FF2A2A2A" WindowStartupLocation="CenterScreen">
+        Title="MainWindow" Height="600" Width="1000" Background="#FF2A2A2A" WindowStartupLocation="CenterScreen">
     <Window.Resources>
         <Style x:Key="FocusVisual">
             <Setter Property="Control.Template">
@@ -54,6 +54,8 @@
                 </Grid>
                 <Button  Name="BtnManageProjects" Style="{DynamicResource SideBarButton}" Content="Manage Projects" Click="BtnManageProjects_Click"/>
                 <Button  Name="BtnManageAdvisors" Style="{DynamicResource SideBarButton}" Content="Manage Advisors" Click="BtnManageAdvisors_Click"/>
+                <Button  Name="BtnManageGroups" Style="{DynamicResource SideBarButton}" Content="Manage Groups" Click="BtnManageGroups_Click"/>
+                <Button  Name="BtnManageStudentGroups" Style="{DynamicResource SideBarButton}" Content="Manage Student's Groups" Click="BtnManageStudentGroups_Click"/>
             </StackPanel>
             <Frame Name="ContentFrame" Grid.Column="2" NavigationUIVisibility="Hidden" />
         </Grid>

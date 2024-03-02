@@ -1,0 +1,13 @@
+﻿<UserControl x:Class="FYP_Management_System.Views.Components.DataLabel"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:FYP_Management_System.Views.Components"
+             mc:Ignorable="d" 
+             d:DesignWidth="200">
+    <StackPanel Orientation="Horizontal">
+        <TextBlock Text="{Binding TextLabel}" FontSize="{Binding RelativeSource={RelativeSource AncestorType=UserControl},Path=FontSize}" Foreground="{DynamicResource TextColor}"/>
+        <TextBlock Text="{Binding TextData}" FontSize="{Binding RelativeSource={RelativeSource AncestorType=UserControl},Path=FontSize}" Foreground="{DynamicResource TextColor}"/>
+    </StackPanel>
+</UserControl>

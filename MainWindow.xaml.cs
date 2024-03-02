@@ -29,8 +29,7 @@ namespace FYP_Management_System
         }
         private void BtnManageStudents_Click(object sender, RoutedEventArgs e)
         {
-            ContentFrame.Source = new Uri("/Views/StudentView.xaml", UriKind.Relative);
-
+            ContentFrame.Content = new Views.StudentView();
         }
 
         private void BtnDashboard_Click(object sender, RoutedEventArgs e)
@@ -39,17 +38,29 @@ namespace FYP_Management_System
 
         private void BtnAddStudent_Click(object sender, RoutedEventArgs e)
         {
-            ContentFrame.Source = new Uri("/Views/StudentEntryView.xaml", UriKind.Relative);
+            ContentFrame.Content = new Views.Components.StudentEntryView();
         }
 
         private void BtnManageProjects_Click(object sender, RoutedEventArgs e)
         {
-            ContentFrame.Source = new Uri("/Views/ProjectView.xaml", UriKind.Relative);
+            ContentFrame.Content = new Views.ProjectView();
         }
 
         private void BtnManageAdvisors_Click(object sender, RoutedEventArgs e)
         {
-            ContentFrame.Source = new Uri("/Views/AdvisorView.xaml", UriKind.Relative);
+            ContentFrame.Content = new Views.AdvisorView();
+        }
+
+        private void BtnManageGroups_Click(object sender, RoutedEventArgs e)
+        {
+            ContentFrame.Content = new Views.ManageGroupView("2");
+
+        }
+
+        private void BtnManageStudentGroups_Click(object sender, RoutedEventArgs e)
+        {
+            ContentFrame.Content = new Views.ManageStudentGroupView();
+
         }
     }
 }

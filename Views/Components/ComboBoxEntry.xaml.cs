@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Data.SqlClient;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -41,7 +42,19 @@ namespace FYP_Management_System.Views.Components
                 ComboBox1.ItemsSource = value;
             }
         }
-
+        public SqlDataReader ItemsRead
+        {
+            set
+            {
+                List<string> items = new List<string>();
+                while (value.Read())
+                {
+                    items.Add(value.GetString(0));
+                }
+                value.Close();
+                Items = items;
+            }
+        }
         public ComboBoxEntry()
         {
             InitializeComponent();
