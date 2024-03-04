@@ -26,7 +26,12 @@ namespace FYP_Management_System.Views
         {
             InitializeComponent();
             var conn = Configuration.getInstance().getConnection();
-            SqlCommand command = new SqlCommand(@"SELECT RegistrationNo,FirstName,LastName,Lookup.Value Gender,Contact,Email,CONVERT(VARCHAR,DateOfBirth,106) DateOfBirth
+            SqlCommand command = new SqlCommand(@"SELECT RegistrationNo
+                                                        ,FirstName
+                                                        ,LastName
+                                                        ,Lookup.Value Gender
+                                                        ,Contact,Email
+                                                        ,CONVERT(VARCHAR,DateOfBirth,106) DateOfBirth
                                                   FROM Person 
                                                   JOIN Student 
                                                   ON Student.ID=Person.ID

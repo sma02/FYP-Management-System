@@ -11,8 +11,10 @@ namespace FYP_Management_System
 {
     public static class Utils
     {
+        private static SqlDataReader reader;
         public static DataTable FillDataGrid(string query, DataGrid dataGrid)
         {
+            closeReader();
             var conn = Configuration.getInstance().getConnection();
             SqlCommand command = new SqlCommand(query, conn);
             SqlDataAdapter adapter = new SqlDataAdapter(command);
@@ -20,6 +22,29 @@ namespace FYP_Management_System
             adapter.Fill(table);
             dataGrid.ItemsSource = table.DefaultView;
             return table;
+        }
+        public static void ExecuteQuery(string query)
+        {
+            closeReader();
+            var conn = Configuration.getInstance().getConnection();
+            SqlCommand command = new SqlCommand(query, conn);
+            command.ExecuteNonQuery();
+        }
+        public static SqlDataReader ReadData(string query)
+        {
+            closeReader();
+            var conn = Configuration.getInstance().getConnection();
+            SqlCommand command = new SqlCommand(query, conn);
+            reader = command.ExecuteReader();
+            return reader;
+        }
+        private static void closeReader()
+        {
+            if (reader != null)
+            {
+                reader.Close();
+                reader = null;
+            }
         }
     }
 }

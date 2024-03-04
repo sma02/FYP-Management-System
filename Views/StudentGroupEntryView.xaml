@@ -33,7 +33,7 @@
             <DataGrid x:Name="AvailableStudentsDataGrid" Grid.Row="3" Margin="20px"  IsReadOnly="True" SelectionMode="Single"/>
             <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center">
                 <Button x:Name="AddButton" FontFamily="Marlett" FontSize="20" Content="5" MinWidth="80px" Click="AddButton_Click"/>
-                <Button x:Name="RemoveButton" FontFamily="Marlett" FontSize="20" Content="6" MinWidth="80px"/>
+                <Button x:Name="RemoveButton" FontFamily="Marlett" FontSize="20" Content="6" MinWidth="80px" Click="RemoveButton_Click"/>
             </StackPanel>
         </Grid>
     </Grid>

@@ -28,7 +28,7 @@ namespace FYP_Management_System.Views
 			                     FROM GroupStudent
 			                     JOIN Student
 			                     ON Student.Id=GroupStudent.StudentId
-			                     WHERE g.GroupId=GroupStudent.GroupId
+			                     WHERE g.GroupId=GroupStudent.GroupId AND GroupStudent.Status=(SELECT Id FROM Lookup WHERE Lookup.Value='Active')
 			                     FOR XML PATH('')),1,1,'') [Registration Numbers]
                                  FROM GroupStudent g
                                  GROUP BY g.GroupId", ManageStudentDataGrid);
