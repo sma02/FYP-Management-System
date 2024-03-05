@@ -4,6 +4,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:FYP_Management_System.Views"
+      xmlns:Components="clr-namespace:FYP_Management_System.Views.Components"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="StudentView">
@@ -13,16 +14,23 @@
             <ColumnDefinition/>
             <ColumnDefinition Width="200"/>
         </Grid.ColumnDefinitions>
-        <DataGrid Name="DG1">
-        </DataGrid>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="60px"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Components:SearchBar x:Name="searchBar" SearchRequested="SearchBar_SearchRequested" Margin="40 15"/>
+            <DataGrid Name="DG1" Grid.Row="1" SelectionChanged="DG1_SelectionChanged"/>
+        </Grid>
         <Grid Grid.Column="1">
             <StackPanel VerticalAlignment="Center">
                 <StackPanel.Resources>
                     <Style TargetType="{x:Type Button}" BasedOn="{StaticResource SideBarButton}">
-                        <Setter Property="Margin" Value="10 40px"/>
+                        <Setter Property="Margin" Value="10 25px"/>
                     </Style>
                 </StackPanel.Resources>
-                <Button Click="Button_Click" Content="Add Student"/>
+                <Button Click="AddButton_Click" Content="Add Student"/>
+                <Button x:Name="EditButton" Click="EditButton_Click" Content="Edit Student" IsEnabled="False"/>
                 <Button Content="Delete Student"/>
             </StackPanel>
         </Grid>

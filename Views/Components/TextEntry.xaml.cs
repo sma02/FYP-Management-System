@@ -21,6 +21,7 @@ namespace FYP_Management_System.Views.Components
     public partial class TextEntry : UserControl
     {
         private int maxLength;
+        private string initialData = null;
         public string LabelText
         {
             get => TextBlockLabel.Text; 
@@ -29,16 +30,30 @@ namespace FYP_Management_System.Views.Components
                 TextBlockLabel.Text = value;
             }
         }
-
         public string Text
         {
             get => TextBoxText.Text; 
             set
             {
+                if(InitialData == null)
+                {
+                    InitialData = value;
+                }
                 TextBoxText.Text = value;
             }
         }
-
+        public string InputAttribute { get; set; }
+        public bool IsModified { get { return InitialData != Text; } }
+        public string QueryString { get { return InputAttribute + "='" + Text + "'"; } }
+        public string InitialData
+        {
+            get => initialData;
+            set
+            {
+                initialData = value;
+                Text = value;
+            }
+        }
         public int MaxLength
         {
             get => maxLength; 
@@ -51,6 +66,7 @@ namespace FYP_Management_System.Views.Components
 
         public TextEntry()
         {
+            DataContext = this;
             InitializeComponent();
         }
 

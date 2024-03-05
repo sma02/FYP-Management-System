@@ -37,10 +37,10 @@ namespace FYP_Management_System.Views
         {
             DataContext = this;
             InitializeComponent();
-            Utils.FillDataGrid("SELECT Id,Title FROM Project", ProjectDataGrid);
-            Utils.FillDataGrid("SELECT Advisor.Id,Lookup.Value Designation,Salary FROM Advisor JOIN Lookup ON Lookup.Id=Designation WHERE Designation>=6 AND Designation<=7", MainAdvisorDataGrid);
-            Utils.FillDataGrid("SELECT Advisor.Id,Lookup.Value Designation,Salary FROM Advisor JOIN Lookup ON Lookup.Id=Designation WHERE Designation>=8 AND Designation<=9", CoAdvisorDataGrid);
-            Utils.FillDataGrid("SELECT Advisor.Id,Lookup.Value Designation,Salary FROM Advisor JOIN Lookup ON Lookup.Id=Designation WHERE Designation=10", IndustryAdvisorDataGrid);
+            ProjectDataGrid.ItemsSource =  Utils.FillDataGrid("SELECT Id,Title FROM Project").DefaultView;
+            MainAdvisorDataGrid.ItemsSource = Utils.FillDataGrid("SELECT Advisor.Id,Lookup.Value Designation,Salary FROM Advisor JOIN Lookup ON Lookup.Id=Designation WHERE Designation>=6 AND Designation<=7").DefaultView;
+            CoAdvisorDataGrid.ItemsSource = Utils.FillDataGrid("SELECT Advisor.Id,Lookup.Value Designation,Salary FROM Advisor JOIN Lookup ON Lookup.Id=Designation WHERE Designation>=8 AND Designation<=9").DefaultView;
+            IndustryAdvisorDataGrid.ItemsSource = Utils.FillDataGrid("SELECT Advisor.Id,Lookup.Value Designation,Salary FROM Advisor JOIN Lookup ON Lookup.Id=Designation WHERE Designation=10").DefaultView;
         }
 
         public ManageGroupView(string groupId):this()

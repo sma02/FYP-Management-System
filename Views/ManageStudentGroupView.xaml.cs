@@ -24,14 +24,14 @@ namespace FYP_Management_System.Views
         public ManageStudentGroupView()
         {
             InitializeComponent();
-            Utils.FillDataGrid(@"SELECT GroupId,STUFF((SELECT ', ' +Student.RegistrationNo
+            ManageStudentDataGrid.ItemsSource = Utils.FillDataGrid(@"SELECT GroupId,STUFF((SELECT ', ' +Student.RegistrationNo
 			                     FROM GroupStudent
 			                     JOIN Student
 			                     ON Student.Id=GroupStudent.StudentId
 			                     WHERE g.GroupId=GroupStudent.GroupId AND GroupStudent.Status=(SELECT Id FROM Lookup WHERE Lookup.Value='Active')
 			                     FOR XML PATH('')),1,1,'') [Registration Numbers]
                                  FROM GroupStudent g
-                                 GROUP BY g.GroupId", ManageStudentDataGrid);
+                                 GROUP BY g.GroupId").DefaultView;
         }
 
         private void ManageStudentDataGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)

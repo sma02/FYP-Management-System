@@ -42,7 +42,7 @@ namespace FYP_Management_System.Views
                                  JOIN Lookup
                                  ON Person.Gender=Lookup.Id
                                  WHERE Status=(SELECT Id FROM Lookup WHERE Lookup.Value='Active') AND 
-                                       GroupId=" + groupId.ToString(), AssignedStudentsDataGrid);
+                                       GroupId=" + groupId.ToString());
             availableStudentsDataTable = Utils.FillDataGrid(@"SELECT Student.Id,RegistrationNo,CONCAT(FirstName,' ',LastName) Name,Contact,Email,Lookup.Value Gender, CONVERT(DATE,DateOfBirth,106) DateOfBirth
                                  FROM (SELECT Student.Id
                                  FROM Student
@@ -55,7 +55,9 @@ namespace FYP_Management_System.Views
                                  JOIN Person
                                  ON Person.Id=i.Id
                                  JOIN Lookup
-                                 ON Person.Gender=Lookup.Id", AvailableStudentsDataGrid);
+                                 ON Person.Gender=Lookup.Id");
+            AssignedStudentsDataGrid.ItemsSource = assignedStudentsDataTable.DefaultView;
+            AvailableStudentsDataGrid.ItemsSource = availableStudentsDataTable.DefaultView;
         }
 
         private void AddButton_Click(object sender, RoutedEventArgs e)

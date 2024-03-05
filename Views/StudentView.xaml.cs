@@ -1,9 +1,11 @@
-﻿using Microsoft.Data.SqlClient;
+﻿using FYP_Management_System.Views.Components;
+using Microsoft.Data.SqlClient;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -22,30 +24,65 @@ namespace FYP_Management_System.Views
     /// </summary>
     public partial class StudentView : Page
     {
+        private DataView tableView;
+        private bool IsBusy;
+        private string filterString;
+        private DataTable table;
         public StudentView()
         {
             InitializeComponent();
-            var conn = Configuration.getInstance().getConnection();
-            SqlCommand command = new SqlCommand(@"SELECT RegistrationNo
+            new Thread(new ThreadStart(() => 
+            {       
+                table = Utils.FillDataGrid(@"SELECT     Student.ID 
+                                                        ,RegistrationNo
                                                         ,FirstName
                                                         ,LastName
                                                         ,Lookup.Value Gender
-                                                        ,Contact,Email
+                                                        ,Contact
+                                                        ,Email
                                                         ,CONVERT(VARCHAR,DateOfBirth,106) DateOfBirth
                                                   FROM Person 
                                                   JOIN Student 
                                                   ON Student.ID=Person.ID
                                                   JOIN Lookup
-                                                  ON Gender=Lookup.Id AND Lookup.Category='GENDER'", conn);
-            SqlDataAdapter adapter = new SqlDataAdapter(command);
-            DataTable table = new DataTable();
-            adapter.Fill(table);
+                                                  ON Gender=Lookup.Id AND Lookup.Category='GENDER'");
+                this.Dispatcher.Invoke(() => {
             DG1.ItemsSource = table.DefaultView;
+                });
+            })).Start();
+            searchBar.SearchAttributes = new List<string> { "FirstName", "LastName" };
         }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void AddButton_Click(object sender, RoutedEventArgs e)
         {
             NavigationService.Content = new Views.Components.StudentEntryView();
+        }
+
+        private void SearchBar_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
+
+        private void SearchButton_Click(object sender, RoutedEventArgs e)
+        {
+        }
+        private void SearchBar_SearchRequested(object sender, EventArgs e)
+        {
+            string filterString = searchBar.FilterString;
+            table.DefaultView.RowFilter = filterString;
+        }
+
+        private void EditButton_Click(object sender, RoutedEventArgs e)
+        {
+            DataRowView selectedItem = (DataRowView)DG1.SelectedItem;
+            NavigationService.Content = new StudentEntryView(selectedItem.Row.ItemArray);
+        }
+
+        private void DG1_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if(DG1.SelectedCells.Count>0)
+            {
+                EditButton.IsEnabled = true;
+            }
         }
     }
 }

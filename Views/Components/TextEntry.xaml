@@ -16,7 +16,7 @@
                     HorizontalAlignment="Stretch"
                     IsHitTestVisible="False"/>
         <TextBox Name="TextBoxText"
-                 MaxLength="{Binding MaxLenght}"
+                 MaxLength="{Binding MaxLength}"
                  Margin="10 5 10 10"
                  FontSize="14px"
                  Padding="10 8"
