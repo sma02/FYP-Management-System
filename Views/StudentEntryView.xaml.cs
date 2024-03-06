@@ -28,7 +28,7 @@ namespace FYP_Management_System.Views.Components
         public StudentEntryView(object[]? itemArray = null)
         {
             InitializeComponent();
-            //Loaded += (e, a) => { NavigationService.Navigating += NavigationService_Navigating; };
+            Loaded += (e, a) => { NavigationService.Navigating += NavigationService_Navigating; };
             List<string> genders = new List<string>();
             var conn = Configuration.getInstance().getConnection();
             SqlCommand command = new SqlCommand("SELECT Value FROM Lookup WHERE Category='GENDER'", conn);
@@ -42,8 +42,10 @@ namespace FYP_Management_System.Views.Components
                 RegistrationNumberEntry.Text = itemArray[1].ToString();
                 FirstNameEntry.Text = itemArray[2].ToString();
                 LastNameEntry.Text = itemArray[3].ToString();
+                GenderEntry.SelectedItem = itemArray[4].ToString();
                 ContactEntry.Text = itemArray[5].ToString();
                 EmailEntry.Text = itemArray[6].ToString();
+                DateEntry.SelectedDate = itemArray[7].ToString();
             }
         }
 
@@ -73,7 +75,7 @@ namespace FYP_Management_System.Views.Components
                 command.Parameters.AddWithValue("@Contact", ContactEntry.Text);
                 command.Parameters.AddWithValue("@Email", EmailEntry.Text);
                 command.Parameters.AddWithValue("@DateofBirth", DateEntry.SelectedDate);
-                command.Parameters.AddWithValue("@Gender", GenderEntry.SelectedItem.ToString());
+                command.Parameters.AddWithValue("@Gender", GenderEntry.SelectedItem);
                 command.Parameters.AddWithValue("@RegistrationNo", RegistrationNumberEntry.Text);
                 command.ExecuteNonQuery();
             }
@@ -86,9 +88,13 @@ namespace FYP_Management_System.Views.Components
                     modifiedFields.Add(LastNameEntry.QueryString);
                 if (ContactEntry.IsModified)
                     modifiedFields.Add(ContactEntry.QueryString);
+                if (GenderEntry.IsModified)
+                    modifiedFields.Add("Gender = (SELECT Id FROM Lookup WHERE VALUE='"+GenderEntry.SelectedItem+"')");
                 if (EmailEntry.IsModified)
                     modifiedFields.Add(EmailEntry.QueryString);
-                if(modifiedFields.Count==0)
+                if (DateEntry.IsModified)
+                    modifiedFields.Add(DateEntry.QueryString);
+                if (modifiedFields.Count==0)
                 {
                     NavigationService.GoBack();
                     return;
@@ -98,12 +104,12 @@ namespace FYP_Management_System.Views.Components
                 command.Parameters.AddWithValue("@ID", updateId);
             }
             command.ExecuteNonQuery();
-            NavigationService.GoBack();
+            NavigationService.Content = new StudentView();
         }
 
         private void ButtonCancel_Click(object sender, RoutedEventArgs e)
         {
-            NavigationService.Source= new Uri(" / Views/StudentView.xaml", UriKind.Relative);
+            NavigationService.Content = new StudentView();
         }
     }
 }

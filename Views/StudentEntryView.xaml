@@ -41,9 +41,9 @@
                 <Components:TextEntry x:Name="EmailEntry" InputAttribute="Email" Grid.Row="0" Grid.Column="1" LabelText="Email" MaxLength="30"/>
                 <Components:TextEntry x:Name="FirstNameEntry" InputAttribute="FirstName" Grid.Row="1" Grid.Column="0" LabelText="First Name" MaxLength="100"/>
             <Components:TextEntry x:Name="LastNameEntry" InputAttribute="LastName" Grid.Row="1" Grid.Column="1" LabelText="Last Name" MaxLength="100"/>
-            <Components:ComboBoxEntry x:Name="GenderEntry" Grid.Row="2" Grid.Column="0" LabelText="Gender"/>
+            <Components:ComboBoxEntry x:Name="GenderEntry" InputAttribute="Gender" Grid.Row="2" Grid.Column="0" LabelText="Gender"/>
                 <Components:TextEntry x:Name="ContactEntry" InputAttribute="Contact" Grid.Row="2" Grid.Column="1" LabelText="Contact Number" MaxLength="20"/>
-            <Components:DateEntry x:Name="DateEntry" Grid.Row="3" Grid.Column="2" LabelText="Date of Birth"/>
+            <Components:DateEntry x:Name="DateEntry" InputAttribute="DateOfBirth" Grid.Row="3" Grid.Column="2" LabelText="Date of Birth"/>
 
 
 

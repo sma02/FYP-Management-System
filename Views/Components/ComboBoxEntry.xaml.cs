@@ -23,6 +23,7 @@ namespace FYP_Management_System.Views.Components
     /// </summary>
     public partial class ComboBoxEntry : UserControl
     {
+        private string initialData = null;
         public string LabelText
         {
             get => TextBlockLabel.Text;
@@ -30,10 +31,6 @@ namespace FYP_Management_System.Views.Components
             {
                 TextBlockLabel.Text = value;
             }
-        }
-        public object SelectedItem
-        {
-            get => ComboBox1.SelectedItem;
         }
         public List<string> Items
         {
@@ -56,8 +53,33 @@ namespace FYP_Management_System.Views.Components
                 Items = items;
             }
         }
+        public string SelectedItem
+        {
+            get => (string)ComboBox1.SelectedValue;
+            set
+            {
+                if (InitialData == null)
+                {
+                    InitialData = value;
+                }
+                ComboBox1.SelectedValue = value;
+            }
+        }
+        public string InputAttribute { get; set; }
+        public bool IsModified { get { return InitialData != SelectedItem; } }
+        public string QueryString { get { return InputAttribute + "='" + SelectedItem + "'"; } }
+        public string InitialData
+        {
+            get => initialData;
+            set
+            {
+                initialData = value;
+
+            }
+        }
         public ComboBoxEntry()
         {
+            DataContext = this;
             InitializeComponent();
         }
 

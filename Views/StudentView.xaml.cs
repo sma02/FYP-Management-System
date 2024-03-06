@@ -84,5 +84,11 @@ namespace FYP_Management_System.Views
                 EditButton.IsEnabled = true;
             }
         }
+
+        private void DG1_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            DataRowView selectedItem = (DataRowView)DG1.SelectedItem;
+            NavigationService.Content = new StudentEntryView(selectedItem.Row.ItemArray);
+        }
     }
 }

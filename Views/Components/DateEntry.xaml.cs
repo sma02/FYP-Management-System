@@ -21,6 +21,7 @@ namespace FYP_Management_System.Views.Components
     public partial class DateEntry : UserControl
     {
         private string labelText;
+        private DateTime? initialData = null;
         public string LabelText
         {
             get => labelText;
@@ -30,12 +31,39 @@ namespace FYP_Management_System.Views.Components
                 TextBlockLabel.Text = value;
             }
         }
-        public string SelectedDate
+        public string? SelectedDate
         {
-            get => DatePicker1.SelectedDate.Value.Date.ToShortDateString();
+            get
+            {
+                if(DatePicker1.SelectedDate==null)
+                {
+                    return null;
+                }
+                return  DatePicker1.SelectedDate.Value.Date.ToShortDateString();
+            }
+            set
+            {
+                if (InitialData == null)
+                {
+                    InitialData = value;
+                }
+                DatePicker1.SelectedDate = Convert.ToDateTime(value);
+            }
+        }
+        public string InputAttribute { get; set; }
+        public bool IsModified { get { return InitialData != SelectedDate; } }
+        public string QueryString { get { return InputAttribute + "=CONVERT(DATETIME,'" + SelectedDate+"',103)"; } }
+        public string InitialData
+        {
+            get => initialData.ToString();
+            set
+            {
+                initialData = Convert.ToDateTime(value);
+            }
         }
         public DateEntry()
         {
+            DataContext = this;
             InitializeComponent();
         }
     }

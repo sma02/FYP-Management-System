@@ -35,5 +35,7 @@
         <Setter Property="Background" Value="#FF2D2F2F"/>
         <Setter Property="VerticalGridLinesBrush" Value="Transparent"/>
         <Setter Property="HorizontalGridLinesBrush" Value="Transparent"/>
+        <Setter Property="SelectionMode" Value="Single"/>
+        <Setter Property="IsReadOnly" Value="True"/>
     </Style>
 </ResourceDictionary>

@@ -20,7 +20,7 @@
                 <RowDefinition/>
             </Grid.RowDefinitions>
             <Components:SearchBar x:Name="searchBar" SearchRequested="SearchBar_SearchRequested" Margin="40 15"/>
-            <DataGrid Name="DG1" Grid.Row="1" SelectionChanged="DG1_SelectionChanged"/>
+            <DataGrid Name="DG1" Grid.Row="1" SelectionChanged="DG1_SelectionChanged" MouseDoubleClick="DG1_MouseDoubleClick"/>
         </Grid>
         <Grid Grid.Column="1">
             <StackPanel VerticalAlignment="Center">

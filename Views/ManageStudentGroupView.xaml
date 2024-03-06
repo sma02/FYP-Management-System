@@ -27,7 +27,7 @@
                 <RowDefinition/>
                 <RowDefinition Height="50px"/>
             </Grid.RowDefinitions>
-            <DataGrid x:Name="ManageStudentDataGrid" Grid.Row="1" Margin="20" SelectionMode="Single" IsReadOnly="True" MouseDoubleClick="ManageStudentDataGrid_MouseDoubleClick"/>
+            <DataGrid x:Name="ManageStudentDataGrid" Grid.Row="1" Margin="20" MouseDoubleClick="ManageStudentDataGrid_MouseDoubleClick"/>
         </Grid>
     </Grid>
 </Page>
