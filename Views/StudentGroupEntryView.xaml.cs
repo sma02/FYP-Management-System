@@ -53,7 +53,7 @@ namespace FYP_Management_System.Views
                                  JOIN Student
                                  ON Student.Id=i.Id
                                  JOIN Person
-                                 ON Person.Id=i.Id
+                                 ON Person.Id=i.Id  AND LEFT(FirstName,1)<>'$'
                                  JOIN Lookup
                                  ON Person.Gender=Lookup.Id");
             AssignedStudentsDataGrid.ItemsSource = assignedStudentsDataTable.DefaultView;

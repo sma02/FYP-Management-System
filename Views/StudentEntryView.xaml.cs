@@ -63,6 +63,17 @@ namespace FYP_Management_System.Views.Components
             SqlCommand command;
             if (updateMode == false)
             {
+                SqlDataReader reader = Utils.ReadData(@"SELECT CONVERT(BIT,COUNT(1))
+                                                        FROM Student 
+                                                        WHERE RegistrationNo='" + RegistrationNumberEntry.Text + "'");
+                reader.Read();
+                if (reader.GetBoolean(0) == true)
+                { 
+                    MessageBox.Show("Error: Student Already Exists with this Registration Number", "Invalid Operation");
+                    reader.Close();
+                    return;
+                }
+                reader.Close();
                 command = new SqlCommand(@"BEGIN TRANSACTION
                                                   INSERT INTO Person(FirstName,LastName,Contact,Email,DateofBirth,Gender)
                                                   VALUES(@FirstName,@LastName,@Contact,@Email,@DateofBirth,(SELECT ID FROM Lookup WHERE Value=@Gender));
@@ -77,7 +88,6 @@ namespace FYP_Management_System.Views.Components
                 command.Parameters.AddWithValue("@DateofBirth", DateEntry.SelectedDate);
                 command.Parameters.AddWithValue("@Gender", GenderEntry.SelectedItem);
                 command.Parameters.AddWithValue("@RegistrationNo", RegistrationNumberEntry.Text);
-                command.ExecuteNonQuery();
             }
             else
             {
@@ -89,18 +99,18 @@ namespace FYP_Management_System.Views.Components
                 if (ContactEntry.IsModified)
                     modifiedFields.Add(ContactEntry.QueryString);
                 if (GenderEntry.IsModified)
-                    modifiedFields.Add("Gender = (SELECT Id FROM Lookup WHERE VALUE='"+GenderEntry.SelectedItem+"')");
+                    modifiedFields.Add("Gender = (SELECT Id FROM Lookup WHERE VALUE='" + GenderEntry.SelectedItem + "')");
                 if (EmailEntry.IsModified)
                     modifiedFields.Add(EmailEntry.QueryString);
                 if (DateEntry.IsModified)
                     modifiedFields.Add(DateEntry.QueryString);
-                if (modifiedFields.Count==0)
+                if (modifiedFields.Count == 0)
                 {
                     NavigationService.GoBack();
                     return;
                 }
                 string updateString = string.Join(",", modifiedFields);
-                command = new SqlCommand(@"UPDATE Person SET "+updateString +" WHERE Id=@ID",conn);
+                command = new SqlCommand(@"UPDATE Person SET " + updateString + " WHERE Id=@ID", conn);
                 command.Parameters.AddWithValue("@ID", updateId);
             }
             command.ExecuteNonQuery();

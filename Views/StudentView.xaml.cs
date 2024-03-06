@@ -43,7 +43,7 @@ namespace FYP_Management_System.Views
                                                         ,CONVERT(VARCHAR,DateOfBirth,106) DateOfBirth
                                                   FROM Person 
                                                   JOIN Student 
-                                                  ON Student.ID=Person.ID
+                                                  ON Student.ID=Person.ID AND LEFT(FirstName,1)<>'$'
                                                   JOIN Lookup
                                                   ON Gender=Lookup.Id AND Lookup.Category='GENDER'");
                 this.Dispatcher.Invoke(() => {
@@ -89,6 +89,15 @@ namespace FYP_Management_System.Views
         {
             DataRowView selectedItem = (DataRowView)DG1.SelectedItem;
             NavigationService.Content = new StudentEntryView(selectedItem.Row.ItemArray);
+        }
+
+        private void DeleteButton_Click(object sender, RoutedEventArgs e)
+        {
+            DataRowView selectedItem = (DataRowView)DG1.SelectedItem;
+            string? id = selectedItem.Row.ItemArray[0]?.ToString();
+            ((DataView)DG1.ItemsSource).Table?.Rows.Remove(selectedItem.Row);
+            Utils.ExecuteQuery(@"UPDATE GroupStudent SET Status = 4 WHERE StudentId = " +id + 
+                ";UPDATE Person SET FirstName = '$' + FirstName WHERE Id = "+id);
         }
     }
 }

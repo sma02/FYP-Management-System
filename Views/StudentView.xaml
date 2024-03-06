@@ -31,7 +31,7 @@
                 </StackPanel.Resources>
                 <Button Click="AddButton_Click" Content="Add Student"/>
                 <Button x:Name="EditButton" Click="EditButton_Click" Content="Edit Student" IsEnabled="False"/>
-                <Button Content="Delete Student"/>
+                <Button Content="Delete Student" Click="DeleteButton_Click"/>
             </StackPanel>
         </Grid>
     </Grid>
