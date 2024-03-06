@@ -1,4 +1,6 @@
-﻿using Microsoft.Data.SqlClient;
+﻿using FYP_Management_System.Views;
+using FYP_Management_System.Views.Components;
+using Microsoft.Data.SqlClient;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -29,7 +31,25 @@ namespace FYP_Management_System
         }
         private void BtnManageStudents_Click(object sender, RoutedEventArgs e)
         {
-            ContentFrame.Content = new Views.StudentView();
+            ContentFrame.Content = new Views.CrudManageView(@"SELECT     Student.ID 
+                                                        ,RegistrationNo
+                                                        ,FirstName
+                                                        ,LastName
+                                                        ,Lookup.Value Gender
+                                                        ,Contact
+                                                        ,Email
+                                                        ,CONVERT(VARCHAR,DateOfBirth,106) DateOfBirth
+                                                  FROM Person 
+                                                  JOIN Student 
+                                                  ON Student.ID=Person.ID AND LEFT(FirstName,1)<>'$'
+                                                  JOIN Lookup
+                                                  ON Gender=Lookup.Id AND Lookup.Category='GENDER'"
+                                                  ,
+                                                  @"UPDATE GroupStudent SET Status = 4 WHERE StudentId = @Id;
+                                                    UPDATE Person SET FirstName = '$' + FirstName WHERE Id = @Id"
+                                                  ,
+                                                  typeof(StudentEntryView)
+                                                  ,new List<string>{"FirstName","LastName" });
         }
 
         private void BtnDashboard_Click(object sender, RoutedEventArgs e)
@@ -48,7 +68,27 @@ namespace FYP_Management_System
 
         private void BtnManageAdvisors_Click(object sender, RoutedEventArgs e)
         {
-            ContentFrame.Content = new Views.AdvisorView();
+            ContentFrame.Content = new Views.CrudManageView(@"SELECT     Advisor.ID 
+                                                        ,FirstName
+                                                        ,LastName
+                                                        ,l2.Value Designation
+                                                        ,l1.Value Gender
+                                                        ,CONVERT(VARCHAR,Salary) + 'Rs' Salary
+                                                        ,Contact
+                                                        ,Email
+                                                        ,CONVERT(VARCHAR,DateOfBirth,106) DateOfBirth
+                                                  FROM Person 
+                                                  JOIN Advisor 
+                                                  ON Advisor.ID=Person.ID AND LEFT(FirstName,1)<>'$'
+                                                  JOIN Lookup l1
+                                                  ON Gender=l1.Id AND l1.Category='GENDER'
+                                                  JOIN Lookup l2
+                                                  ON Designation=l2.Id AND l2.Category='DESIGNATION'"
+                                       ,
+                                      @"UPDATE Person SET FirstName = '$' + FirstName WHERE Id = @Id"
+                                      ,
+                                      typeof(AdvisorEntryView)
+                                      , new List<string> { "FirstName", "LastName" });
         }
 
         private void BtnManageGroups_Click(object sender, RoutedEventArgs e)

@@ -1,4 +1,4 @@
-﻿<Page x:Class="FYP_Management_System.Views.StudentView"
+﻿<Page x:Class="FYP_Management_System.Views.CrudManageView"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -29,9 +29,9 @@
                         <Setter Property="Margin" Value="10 25px"/>
                     </Style>
                 </StackPanel.Resources>
-                <Button Click="AddButton_Click" Content="Add Student"/>
-                <Button x:Name="EditButton" Click="EditButton_Click" Content="Edit Student" IsEnabled="False"/>
-                <Button Content="Delete Student" Click="DeleteButton_Click"/>
+                <Button Click="AddButton_Click" Content="Add"/>
+                <Button x:Name="EditButton" Click="EditButton_Click" Content="Edit" IsEnabled="False"/>
+                <Button Content="Delete" Click="DeleteButton_Click"/>
             </StackPanel>
         </Grid>
     </Grid>

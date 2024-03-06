@@ -1,8 +1,6 @@
 ﻿using Microsoft.Data.SqlClient;
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,35 +14,36 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace FYP_Management_System.Views.Components
+namespace FYP_Management_System.Views
 {
     /// <summary>
-    /// Interaction logic for StudentEntryView.xaml
+    /// Interaction logic for AdvisorEntryView.xaml
     /// </summary>
-    public partial class StudentEntryView : Page
+    public partial class AdvisorEntryView : Page
     {
         private bool updateMode = false;
         private int updateId;
         public event EventHandler UpdateNeeded;
-        public StudentEntryView(object[]? itemArray = null)
+        public AdvisorEntryView(object[]? itemArray = null)
         {
             InitializeComponent();
             GenderEntry.ItemsRead = Utils.ReadData("SELECT Value FROM Lookup WHERE Category = 'GENDER'");
+            DesignationEntry.ItemsRead = Utils.ReadData("SELECT Value FROM Lookup WHERE Category = 'DESIGNATION'");
             if (itemArray != null)
             {
                 updateMode = true;
                 updateId = (int)itemArray[0];
                 ButtonAdd.Content = "Update";
-                RegistrationNumberEntry.Text = itemArray[1].ToString();
-                FirstNameEntry.Text = itemArray[2].ToString();
-                LastNameEntry.Text = itemArray[3].ToString();
+                FirstNameEntry.Text = itemArray[1].ToString();
+                LastNameEntry.Text = itemArray[2].ToString();
+                DesignationEntry.SelectedItem = itemArray[3].ToString();
                 GenderEntry.SelectedItem = itemArray[4].ToString();
-                ContactEntry.Text = itemArray[5].ToString();
-                EmailEntry.Text = itemArray[6].ToString();
-                DateEntry.SelectedDate = itemArray[7].ToString();
+                SalaryEntry.Text = itemArray[5].ToString().Replace("Rs","");
+                ContactEntry.Text = itemArray[6].ToString();
+                EmailEntry.Text = itemArray[7].ToString();
+                DateEntry.SelectedDate = itemArray[8].ToString();
             }
         }
-
 
         private void ButtonAdd_Click(object sender, RoutedEventArgs e)
         {
@@ -52,23 +51,12 @@ namespace FYP_Management_System.Views.Components
             SqlCommand command;
             if (updateMode == false)
             {
-                SqlDataReader reader = Utils.ReadData(@"SELECT CONVERT(BIT,COUNT(1))
-                                                        FROM Student 
-                                                        WHERE RegistrationNo='" + RegistrationNumberEntry.Text + "'");
-                reader.Read();
-                if (reader.GetBoolean(0) == true)
-                { 
-                    MessageBox.Show("Error: Student Already Exists with this Registration Number", "Invalid Operation");
-                    reader.Close();
-                    return;
-                }
-                reader.Close();
                 command = new SqlCommand(@"BEGIN TRANSACTION
                                                   INSERT INTO Person(FirstName,LastName,Contact,Email,DateofBirth,Gender)
                                                   VALUES(@FirstName,@LastName,@Contact,@Email,@DateofBirth,(SELECT ID FROM Lookup WHERE Value=@Gender));
                                                   DECLARE @RecordId int = scope_identity();
-                                                  INSERT INTO Student(Id,RegistrationNo)
-                                                  VALUES(@RecordId,@RegistrationNo);
+                                                  INSERT INTO Student(Id,Designation,Salary)
+                                                  VALUES(@RecordId,(SELECT ID FROM Lookup WHERE Value=@Designation),Salary);
                                                   COMMIT TRANSACTION;", conn);
                 command.Parameters.AddWithValue("@FirstName", FirstNameEntry.Text);
                 command.Parameters.AddWithValue("@LastName", LastNameEntry.Text);
@@ -76,11 +64,13 @@ namespace FYP_Management_System.Views.Components
                 command.Parameters.AddWithValue("@Email", EmailEntry.Text);
                 command.Parameters.AddWithValue("@DateofBirth", DateEntry.SelectedDate);
                 command.Parameters.AddWithValue("@Gender", GenderEntry.SelectedItem);
-                command.Parameters.AddWithValue("@RegistrationNo", RegistrationNumberEntry.Text);
+                command.Parameters.AddWithValue("@Designation", DesignationEntry.SelectedItem);
+                command.Parameters.AddWithValue("@Salary", SalaryEntry.Text);
             }
             else
             {
                 List<string> modifiedFields = new List<string>();
+                List<string> modifiedFields2 = new List<string>();
                 if (FirstNameEntry.IsModified)
                     modifiedFields.Add(FirstNameEntry.QueryString);
                 if (LastNameEntry.IsModified)
@@ -93,13 +83,23 @@ namespace FYP_Management_System.Views.Components
                     modifiedFields.Add(EmailEntry.QueryString);
                 if (DateEntry.IsModified)
                     modifiedFields.Add(DateEntry.QueryString);
-                if (modifiedFields.Count == 0)
+                if (DesignationEntry.IsModified)
+                    modifiedFields2.Add("Designation = (SELECT Id FROM Lookup WHERE VALUE='" + DesignationEntry.SelectedItem + "')");
+                if (SalaryEntry.IsModified)
+                    modifiedFields2.Add(SalaryEntry.QueryString);
+                if (modifiedFields.Count == 0 && modifiedFields2.Count == 0)
                 {
                     NavigationService.GoBack();
                     return;
                 }
                 string updateString = string.Join(",", modifiedFields);
-                command = new SqlCommand(@"UPDATE Person SET " + updateString + " WHERE Id=@ID", conn);
+                string updateString2 = string.Join(",", modifiedFields2);
+                List<string> queries = new List<string>();
+                if (modifiedFields.Count != 0)
+                    queries.Add(@"UPDATE Person SET " + updateString + "WHERE Id=@ID");
+                if(modifiedFields2.Count != 0)
+                    queries.Add("UPDATE Advisor SET " +updateString2 + "WHERE Id=@ID");
+                command = new SqlCommand(string.Join(";", queries), conn);
                 command.Parameters.AddWithValue("@ID", updateId);
             }
             command.ExecuteNonQuery();
