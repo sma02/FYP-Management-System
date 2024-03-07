@@ -14,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Xml.Linq;
 
 namespace FYP_Management_System.Views
 {
@@ -25,14 +26,15 @@ namespace FYP_Management_System.Views
         private DataTable assignedStudentsDataTable;
         private DataTable availableStudentsDataTable;
         private int groupId;
+        public event EventHandler UpdateNeeded;
         public StudentGroupEntryView()
         {
             InitializeComponent();
         }
-        public StudentGroupEntryView(int groupId) : this()
+        public StudentGroupEntryView(object[]? itemArray = null) : this()
         {
             GroupIdLabel.TextData = groupId.ToString();
-            this.groupId = groupId;
+            groupId = (int)itemArray[0];
             assignedStudentsDataTable = Utils.FillDataGrid(@"SELECT Student.Id,RegistrationNo,CONCAT(FirstName,' ',LastName) Name,Contact,Email,Lookup.Value Gender,CONVERT(date,DateOfBirth,106) [Date of Birth]
                                  FROM GroupStudent
                                  JOIN Student
@@ -90,6 +92,12 @@ namespace FYP_Management_System.Views
                 availableStudentsDataTable.Rows.Add(selectedItem.Row.ItemArray);
                 assignedStudentsDataTable.Rows.Remove(selectedItem.Row);
             }
+        }
+
+        private void BackButton_Click(object sender, RoutedEventArgs e)
+        {
+            UpdateNeeded?.Invoke(this, EventArgs.Empty);
+            NavigationService.GoBack();
         }
     }
 }

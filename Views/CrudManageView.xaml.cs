@@ -11,6 +11,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
+using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -27,17 +28,26 @@ namespace FYP_Management_System.Views
     {
         private DataTable table;
         private string readQuery;
-        private string deleteQuery;
+        private string? deleteQuery;
         private Type addEditPage;
-        public CrudManageView(string readQuery,string deleteQuery,Type addEditPage,List<string> searchAttributes)
+        public CrudManageView(string readQuery,string? deleteQuery,Type addEditPage,List<string> searchAttributes,bool CanAdd = true)
         {
             InitializeComponent();
             this.addEditPage = addEditPage;
             this.readQuery = readQuery;
+            if(deleteQuery==null)
+            {
+                DeleteButton.Visibility = Visibility.Collapsed;
+            }
+            if(CanAdd==false)
+            {
+                AddButton.Visibility = Visibility.Collapsed;
+            }
             this.deleteQuery = deleteQuery;
             populateTable();
             searchBar.SearchAttributes = searchAttributes;
         }
+
         private void populateTable()
         {
             new Thread(new ThreadStart(() =>
@@ -60,7 +70,7 @@ namespace FYP_Management_System.Views
 
         private void EditButton_Click(object sender, RoutedEventArgs e)
         {
-                        DataRowView selectedItem = (DataRowView)DG1.SelectedItem;
+            DataRowView selectedItem = (DataRowView)DG1.SelectedItem;
             object? page = Activator.CreateInstance(addEditPage, new object[] { selectedItem.Row.ItemArray });
             NavigationService.Content = page;
             var eventInfo = page.GetType().GetEvent("UpdateNeeded");
@@ -82,11 +92,14 @@ namespace FYP_Management_System.Views
 
         private void DG1_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            DataRowView selectedItem = (DataRowView)DG1.SelectedItem;
-            object? page = Activator.CreateInstance(addEditPage, new object[] { selectedItem.Row.ItemArray });
-            NavigationService.Content = page;
-            var eventInfo = page.GetType().GetEvent("UpdateNeeded");
-            eventInfo?.AddEventHandler(page, new EventHandler(Handler_UpdateNeeded));
+            if (DG1.SelectedItem != null)
+            {
+                DataRowView selectedItem = (DataRowView)DG1.SelectedItem;
+                object? page = Activator.CreateInstance(addEditPage, new object[] { selectedItem.Row.ItemArray });
+                NavigationService.Content = page;
+                var eventInfo = page.GetType().GetEvent("UpdateNeeded");
+                eventInfo?.AddEventHandler(page, new EventHandler(Handler_UpdateNeeded));
+            }
         }
 
         private void DeleteButton_Click(object sender, RoutedEventArgs e)

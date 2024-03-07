@@ -29,9 +29,9 @@
                         <Setter Property="Margin" Value="10 25px"/>
                     </Style>
                 </StackPanel.Resources>
-                <Button Click="AddButton_Click" Content="Add"/>
+                <Button x:Name="AddButton" Click="AddButton_Click" Content="Add"/>
                 <Button x:Name="EditButton" Click="EditButton_Click" Content="Edit" IsEnabled="False"/>
-                <Button Content="Delete" Click="DeleteButton_Click"/>
+                <Button x:Name="DeleteButton" Content="Delete" Click="DeleteButton_Click"/>
             </StackPanel>
         </Grid>
     </Grid>

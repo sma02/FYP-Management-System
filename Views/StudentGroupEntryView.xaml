@@ -27,6 +27,7 @@
                 <RowDefinition/>
                 <RowDefinition Height="50px"/>
                 <RowDefinition/>
+                <RowDefinition Height="50px"/>
             </Grid.RowDefinitions>
             <Components:DataLabel x:Name="GroupIdLabel" Grid.Row="0" TextLabel="Student's Group Id: " FontSize="18px" VerticalAlignment="Center" Margin="5"/>
             <DataGrid x:Name="AssignedStudentsDataGrid" Grid.Row="1" Margin="20px" IsReadOnly="True" SelectionMode="Single"/>
@@ -35,6 +36,7 @@
                 <Button x:Name="AddButton" FontFamily="Marlett" FontSize="20" Content="5" MinWidth="80px" Click="AddButton_Click"/>
                 <Button x:Name="RemoveButton" FontFamily="Marlett" FontSize="20" Content="6" MinWidth="80px" Click="RemoveButton_Click"/>
             </StackPanel>
+            <Button Grid.Row="4" Content="Back" Click="BackButton_Click"/>
         </Grid>
     </Grid>
 </Page>

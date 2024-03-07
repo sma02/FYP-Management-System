@@ -1,0 +1,57 @@
+﻿<Page x:Class="FYP_Management_System.Views.ProjectEntryView"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:FYP_Management_System.Views"
+      xmlns:Components="clr-namespace:FYP_Management_System.Views.Components"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Background="{DynamicResource BackgroundColor}"
+      Title="ProjectEntryView">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="60px"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <TextBlock Background="{DynamicResource BackgroundColorBar}"
+                   Text="Project Entry :"
+                   FontSize="20px"
+                   Padding="20"
+                   Foreground="{DynamicResource TextColor}"
+                   VerticalAlignment="Center"/>
+        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+
+            <Grid  Background="{DynamicResource BackgroundColor3}"
+               Grid.Row="1" ScrollViewer.CanContentScroll="True">
+
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Components:TextEntry x:Name="ProjectTitleEntry" InputAttribute="Title" Grid.Row="0" Grid.Column="0" LabelText="Project Title" MaxLength="50" HorizontalAlignment="Left" MinWidth="400px"/>
+                <Components:TextEntry x:Name="ProjectDescriptionEntry" InputAttribute="Description" Grid.Row="1" Grid.Column="0" LabelText="Project Description" Height="200"/>
+                <Grid Grid.Row="2">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Button x:Name="AddButton" Content="Add" Grid.Row="2" Click="AddButton_Click"/>
+                <Button Content="Cancel" Grid.Row="2" Grid.Column="1" Click="CancelButton_Click"/>
+                </Grid>
+            </Grid>
+        </ScrollViewer>
+        <Grid Grid.Row="1" Margin="150 0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+        </Grid>
+    </Grid>
+</Page>

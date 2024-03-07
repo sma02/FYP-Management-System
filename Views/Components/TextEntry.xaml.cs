@@ -44,7 +44,11 @@ namespace FYP_Management_System.Views.Components
         }
         public string InputAttribute { get; set; }
         public bool IsModified { get { return InitialData != Text; } }
-        public string QueryString { get { return InputAttribute + "='" + Text + "'"; } }
+        public string QueryString { get {
+                string text = Text;
+                if (text.Contains('\''))
+                    text = text.Replace("'", "''");
+                return InputAttribute + "='" + text + "'"; } }
         public string InitialData
         {
             get => initialData;

@@ -63,9 +63,13 @@ namespace FYP_Management_System
 
         private void BtnManageProjects_Click(object sender, RoutedEventArgs e)
         {
-            ContentFrame.Content = new Views.ProjectView();
+            ContentFrame.Content = new Views.CrudManageView(@"SELECT Id,Title,Description
+                                                              FROM Project
+                                                              WHERE LEFT(Title,1)<>'$'"
+                                                            , @"UPDATE Project SET Title = '$' + Title WHERE Id = @Id"
+                                                            , typeof(ProjectEntryView)
+                                                            , new List<string> { "Title" });
         }
-
         private void BtnManageAdvisors_Click(object sender, RoutedEventArgs e)
         {
             ContentFrame.Content = new Views.CrudManageView(@"SELECT     Advisor.ID 
@@ -99,7 +103,14 @@ namespace FYP_Management_System
 
         private void BtnManageStudentGroups_Click(object sender, RoutedEventArgs e)
         {
-            ContentFrame.Content = new Views.ManageStudentGroupView();
+            ContentFrame.Content = new CrudManageView(@"SELECT GroupId,STUFF((SELECT ', ' +Student.RegistrationNo
+			                     FROM GroupStudent
+			                     JOIN Student
+			                     ON Student.Id=GroupStudent.StudentId
+			                     WHERE g.GroupId=GroupStudent.GroupId AND GroupStudent.Status=(SELECT Id FROM Lookup WHERE Lookup.Value='Active')
+			                     FOR XML PATH('')),1,1,'') [Registration Numbers]
+                                 FROM GroupStudent g
+                                 GROUP BY g.GroupId", null, typeof(StudentGroupEntryView),new List<string>{ "[Registration Numbers]" },CanAdd: false);
 
         }
     }

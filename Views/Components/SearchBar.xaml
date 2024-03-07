@@ -9,7 +9,7 @@
     <Grid KeyUp="SearchTextBox_KeyUp">
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
-            <ColumnDefinition Width="40px"/>
+            <ColumnDefinition Width="60px"/>
         </Grid.ColumnDefinitions>
         <TextBox x:Name="SearchTextBox" 
                  Background="{DynamicResource Control2}"
@@ -18,7 +18,8 @@
         <Button x:Name="SearchButton"
                 Grid.Column="1" 
                 Margin="0" 
-                MinWidth="40px" 
+                MinWidth="60px" 
+                Content="Search"
                 Click="Button_Click"/>
     </Grid>
 </UserControl>
