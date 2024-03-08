@@ -49,11 +49,9 @@
             <StackPanel Margin="0 10 2 0">
                 <Button  Name="BtnDashboard" Style="{DynamicResource SideBarButton}" Content="Dashboard" Click="BtnDashboard_Click"/>
                 <Button  Name="BtnManageStudents" Style="{DynamicResource SideBarButton}" Content="Manage Students" Click="BtnManageStudents_Click"/>
-                <Grid Margin="0 0 10 10">
-                    <Button  Name="BtnAddStudent" Style="{DynamicResource SideBarButton}" Background="{DynamicResource BackgroundColor3}" Height="20px" Content="Add Student" Click="BtnAddStudent_Click"/>
-                </Grid>
                 <Button  Name="BtnManageProjects" Style="{DynamicResource SideBarButton}" Content="Manage Projects" Click="BtnManageProjects_Click"/>
                 <Button  Name="BtnManageAdvisors" Style="{DynamicResource SideBarButton}" Content="Manage Advisors" Click="BtnManageAdvisors_Click"/>
+                <Button  Name="BtnManageEvaluations" Style="{DynamicResource SideBarButton}" Content="Manage Evaluations" Click="BtnManageEvaluations_Click"/>
                 <Button  Name="BtnManageGroups" Style="{DynamicResource SideBarButton}" Content="Manage Groups" Click="BtnManageGroups_Click"/>
                 <Button  Name="BtnManageStudentGroups" Style="{DynamicResource SideBarButton}" Content="Manage Student's Groups" Click="BtnManageStudentGroups_Click"/>
             </StackPanel>

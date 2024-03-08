@@ -30,9 +30,15 @@ namespace FYP_Management_System.Views.Components
                 TextBlockLabel.Text = value;
             }
         }
-        public string Text
+        public string? Text
         {
-            get => TextBoxText.Text; 
+
+            get {
+                if (TextBoxText.Text.Length==0 || TextBoxText.Text.Trim().Length==0)
+                {
+                    return null;
+                }
+                return TextBoxText.Text.Trim(); }
             set
             {
                 if(InitialData == null)
@@ -49,7 +55,7 @@ namespace FYP_Management_System.Views.Components
                 if (text.Contains('\''))
                     text = text.Replace("'", "''");
                 return InputAttribute + "='" + text + "'"; } }
-        public string InitialData
+        public string? InitialData
         {
             get => initialData;
             set

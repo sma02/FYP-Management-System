@@ -60,7 +60,10 @@ namespace FYP_Management_System.Views
         }
         private void AddButton_Click(object sender, RoutedEventArgs e)
         {
-            NavigationService.Content = Activator.CreateInstance(addEditPage, new object[] { null });
+            object? page = Activator.CreateInstance(addEditPage, new object[] { null });
+            NavigationService.Content = page;
+            var eventInfo = page?.GetType().GetEvent("UpdateNeeded");
+            eventInfo?.AddEventHandler(page, new EventHandler(Handler_UpdateNeeded));
         }
         private void SearchBar_SearchRequested(object sender, EventArgs e)
         {
@@ -73,7 +76,7 @@ namespace FYP_Management_System.Views
             DataRowView selectedItem = (DataRowView)DG1.SelectedItem;
             object? page = Activator.CreateInstance(addEditPage, new object[] { selectedItem.Row.ItemArray });
             NavigationService.Content = page;
-            var eventInfo = page.GetType().GetEvent("UpdateNeeded");
+            var eventInfo = page?.GetType().GetEvent("UpdateNeeded");
             eventInfo?.AddEventHandler(page,new EventHandler(Handler_UpdateNeeded));
         }
 

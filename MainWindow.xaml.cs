@@ -113,5 +113,15 @@ namespace FYP_Management_System
                                  GROUP BY g.GroupId", null, typeof(StudentGroupEntryView),new List<string>{ "[Registration Numbers]" },CanAdd: false);
 
         }
+
+        private void BtnManageEvaluations_Click(object sender, RoutedEventArgs e)
+        {
+            ContentFrame.Content = new CrudManageView(@"SELECT *
+                                                        FROM Evaluation
+                                                        WHERE LEFT(Name,1)<>'$'"
+                                                        , @"UPDATE Evaluation SET Name = '$' + Name WHERE Id = @Id"
+                                                        , typeof(EvaluationEntryView)
+                                                        , new List<string> { "Name" });
+        }
     }
 }
