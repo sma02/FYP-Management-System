@@ -52,6 +52,7 @@
                 <Button  Name="BtnManageProjects" Style="{DynamicResource SideBarButton}" Content="Manage Projects" Click="BtnManageProjects_Click"/>
                 <Button  Name="BtnManageAdvisors" Style="{DynamicResource SideBarButton}" Content="Manage Advisors" Click="BtnManageAdvisors_Click"/>
                 <Button  Name="BtnManageEvaluations" Style="{DynamicResource SideBarButton}" Content="Manage Evaluations" Click="BtnManageEvaluations_Click"/>
+                <Button  Name="BtnMarkEvaluations" Style="{DynamicResource SideBarButton}" Content="Mark Evaluations" Click="BtnMarkEvaluations_Click"/>
                 <Button  Name="BtnManageGroups" Style="{DynamicResource SideBarButton}" Content="Manage Groups" Click="BtnManageGroups_Click"/>
                 <Button  Name="BtnManageStudentGroups" Style="{DynamicResource SideBarButton}" Content="Manage Student's Groups" Click="BtnManageStudentGroups_Click"/>
             </StackPanel>

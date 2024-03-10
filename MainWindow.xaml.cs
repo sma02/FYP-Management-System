@@ -164,5 +164,61 @@ namespace FYP_Management_System
                                                         , typeof(EvaluationEntryView)
                                                         , new List<string> { "Name" });
         }
+
+        private void BtnMarkEvaluations_Click(object sender, RoutedEventArgs e)
+        {
+            ContentFrame.Content = new CrudManageView(@"SELECT [Group].Id
+                                                         	, Project.Title
+                                                         	,(SELECT CONCAT(FirstName,' ',LastName)
+                                                         	  FROM ProjectAdvisor 
+                                                         	  JOIN Person 
+                                                         	  ON Person.Id=ProjectAdvisor.AdvisorId 
+                                                         	  WHERE ProjectAdvisor.AdvisorRole=(SELECT Id FROM Lookup WHERE Value='Main Advisor')
+															  	AND GroupProject.ProjectId=ProjectAdvisor.ProjectId) [Main Advisor]
+                                                         	 ,(SELECT CONCAT(FirstName,' ',LastName)
+                                                         	  FROM ProjectAdvisor 
+                                                         	  JOIN Person 
+                                                         	  ON Person.Id=ProjectAdvisor.AdvisorId 
+                                                         	  WHERE ProjectAdvisor.AdvisorRole=(SELECT Id FROM Lookup WHERE Value='Co-Advisror')
+																AND GroupProject.ProjectId=ProjectAdvisor.ProjectId) [Co-Advisor]
+                                                         	 ,(SELECT CONCAT(FirstName,' ',LastName)
+                                                         	  FROM ProjectAdvisor 
+                                                         	  JOIN Person 
+                                                         	  ON Person.Id=ProjectAdvisor.AdvisorId 
+                                                         	  WHERE ProjectAdvisor.AdvisorRole=(SELECT Id FROM Lookup WHERE Value='Industry Advisor')
+																AND GroupProject.ProjectId=ProjectAdvisor.ProjectId) [Industry Advisor]
+															                                                     	  ,(SELECT STUFF((SELECT ', ' +Student.RegistrationNo
+                                                         			                     FROM GroupStudent
+                                                         			                     JOIN Student
+                                                         			                     ON Student.Id=GroupStudent.StudentId
+                                                         			                     WHERE g.GroupId=GroupStudent.GroupId 
+                                                         								 AND GroupStudent.Status=(SELECT Id FROM Lookup WHERE Lookup.Value='Active')
+                                                         			                     FOR XML PATH('')),1,1,'') [Registration Numbers]
+                                                                                          FROM GroupStudent g
+                                                         								 WHERE g.GroupId=[Group].Id
+                                                                                          GROUP BY g.GroupId) [Registration Numbers]
+                                                         FROM [Group]
+                                                         JOIN GroupProject
+                                                         ON GroupProject.GroupId=[Group].Id
+                                                         JOIN Project
+                                                         ON Project.Id=GroupProject.ProjectId"
+                                                       , null
+                                                       , typeof(CrudManageView)
+                                                       ,new List<string> { "FirstName","LastName","RegistrationNo"}
+                                                       , false
+                                                       , @"SELECT EvaluationId [Id]
+                                                                 ,Name
+                                                                 ,ObtainedMarks [Obtained Marks]
+                                                                 ,TotalMarks [Total Marks]
+                                                                 ,TotalWeightage [Total Weightage]
+                                                           FROM GroupEvaluation
+                                                           JOIN Evaluation
+                                                           ON Evaluation.Id=GroupEvaluation.EvaluationId
+                                                           WHERE GroupEvaluation.GroupId="
+                                                       ,@"DELETE FROM GroupEvaluation
+                                                          WHERE GroupId=@GroupId AND EvaluationId=@Id" 
+                                                       ,typeof(EvaluationMarkingEntryView)
+                                                       , new List<string> { "Name" });
+        }
     }
 }

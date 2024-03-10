@@ -22,6 +22,14 @@ namespace FYP_Management_System.Views.Components
     {
         private int maxLength;
         private string initialData = null;
+        public bool ReadOnly
+        {
+            get => TextBoxText.IsReadOnly;
+            set
+            {
+                TextBoxText.IsReadOnly = value;
+            }
+        }
         public string LabelText
         {
             get => TextBlockLabel.Text; 

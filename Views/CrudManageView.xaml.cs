@@ -30,11 +30,21 @@ namespace FYP_Management_System.Views
         private string readQuery;
         private string? deleteQuery;
         private Type addEditPage;
-        public CrudManageView(string readQuery,string? deleteQuery,Type addEditPage,List<string> searchAttributes,bool CanAdd = true)
+        private Type? secondaryPage;
+        private string? secondaryQuery;
+        private string? secondaryDeleteQuery;
+        private List<string>? secondarySearchAttributes;
+        private int? secondaryId;
+        public CrudManageView(string readQuery,string? deleteQuery,Type addEditPage,List<string> searchAttributes,bool CanAdd = true,string? secondaryQuery = null, string? secondaryDeleteQuery = null, Type? secondaryPage = null,List<string>? secondarySearchAttributes = null)
         {
             InitializeComponent();
             this.addEditPage = addEditPage;
             this.readQuery = readQuery;
+            this.secondaryQuery = secondaryQuery;
+            this.secondaryDeleteQuery = secondaryDeleteQuery;
+            this.secondaryPage = secondaryPage;
+            this.secondarySearchAttributes = secondarySearchAttributes;
+            this.secondaryId = null;
             if(deleteQuery==null)
             {
                 DeleteButton.Visibility = Visibility.Collapsed;
@@ -47,7 +57,21 @@ namespace FYP_Management_System.Views
             populateTable();
             searchBar.SearchAttributes = searchAttributes;
         }
-
+        public CrudManageView(object[]? itemarray,string query,string? deleteQuery, Type addEditPage,List<string> searchAttributes)
+        {
+            InitializeComponent();
+            this.readQuery = query + itemarray[0].ToString();
+            this.secondaryId = Convert.ToInt32(itemarray[0].ToString());
+            this.addEditPage = addEditPage;
+            this.deleteQuery = deleteQuery;
+            this.secondaryQuery = null;
+            if (deleteQuery == null)
+            {
+                DeleteButton.Visibility = Visibility.Collapsed;
+            }
+            populateTable();
+            searchBar.SearchAttributes = searchAttributes;
+        }
         private void populateTable()
         {
             new Thread(new ThreadStart(() =>
@@ -60,7 +84,11 @@ namespace FYP_Management_System.Views
         }
         private void AddButton_Click(object sender, RoutedEventArgs e)
         {
-            object? page = Activator.CreateInstance(addEditPage, new object[] { null });
+            object? page;
+            if (secondaryId!=null)
+                page = Activator.CreateInstance(addEditPage, new object[] { null,secondaryId });
+            else
+                page = Activator.CreateInstance(addEditPage, new object[] { null });
             NavigationService.Content = page;
             var eventInfo = page?.GetType().GetEvent("UpdateNeeded");
             eventInfo?.AddEventHandler(page, new EventHandler(Handler_UpdateNeeded));
@@ -74,7 +102,14 @@ namespace FYP_Management_System.Views
         private void EditButton_Click(object sender, RoutedEventArgs e)
         {
             DataRowView selectedItem = (DataRowView)DG1.SelectedItem;
-            object? page = Activator.CreateInstance(addEditPage, new object[] { selectedItem.Row.ItemArray });
+            object? page;
+            if (secondaryQuery != null)
+                page = Activator.CreateInstance(addEditPage, new object[] { selectedItem.Row.ItemArray,secondaryQuery,secondaryDeleteQuery,secondaryPage,secondarySearchAttributes });
+            else
+                if (secondaryId != null)
+                    page = Activator.CreateInstance(addEditPage, new object[] { selectedItem.Row.ItemArray, secondaryId });
+                else
+                    page = Activator.CreateInstance(addEditPage, new object[] { selectedItem.Row.ItemArray });
             NavigationService.Content = page;
             var eventInfo = page?.GetType().GetEvent("UpdateNeeded");
             eventInfo?.AddEventHandler(page,new EventHandler(Handler_UpdateNeeded));
@@ -90,6 +125,7 @@ namespace FYP_Management_System.Views
             if(DG1.SelectedCells.Count>0)
             {
                 EditButton.IsEnabled = true;
+                DeleteButton.IsEnabled = true;
             }
         }
 
@@ -98,7 +134,14 @@ namespace FYP_Management_System.Views
             if (DG1.SelectedItem != null)
             {
                 DataRowView selectedItem = (DataRowView)DG1.SelectedItem;
-                object? page = Activator.CreateInstance(addEditPage, new object[] { selectedItem.Row.ItemArray });
+                object? page;
+                if (secondaryQuery != null)
+                    page = Activator.CreateInstance(addEditPage, new object[] { selectedItem.Row.ItemArray, secondaryQuery,secondaryDeleteQuery,secondaryPage,secondarySearchAttributes });
+                else
+                    if (secondaryId != null)
+                        page = Activator.CreateInstance(addEditPage, new object[] { selectedItem.Row.ItemArray, secondaryId });
+                    else
+                        page = Activator.CreateInstance(addEditPage, new object[] { selectedItem.Row.ItemArray });
                 NavigationService.Content = page;
                 var eventInfo = page.GetType().GetEvent("UpdateNeeded");
                 eventInfo?.AddEventHandler(page, new EventHandler(Handler_UpdateNeeded));
@@ -110,7 +153,11 @@ namespace FYP_Management_System.Views
             DataRowView selectedItem = (DataRowView)DG1.SelectedItem;
             string? id = selectedItem.Row.ItemArray[0]?.ToString();
             ((DataView)DG1.ItemsSource).Table?.Rows.Remove(selectedItem.Row);
-            Utils.ExecuteQuery(deleteQuery.Replace("@Id", id));
+            string a = deleteQuery.Replace("@Id", id).Replace("@GroupId", secondaryId.ToString());
+            if (secondaryId!=null)
+                Utils.ExecuteQuery(deleteQuery.Replace("@Id", id).Replace("@GroupId",secondaryId.ToString()));
+            else
+                Utils.ExecuteQuery(deleteQuery.Replace("@Id", id));
         }
     }
 }

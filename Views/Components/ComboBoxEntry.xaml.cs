@@ -32,6 +32,7 @@ namespace FYP_Management_System.Views.Components
                 TextBlockLabel.Text = value;
             }
         }
+        public bool ReadOnly { get; set; }
         public List<string> Items
         {
             get => (List<string>)ComboBox1.ItemsSource; 

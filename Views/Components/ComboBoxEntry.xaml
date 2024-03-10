@@ -303,7 +303,7 @@
                  Padding="18 8"
                  BorderThickness="1"
                  BorderBrush="Gray"
-                 
+                 IsReadOnly="{Binding ReadOnly}"
                  HorizontalAlignment="Stretch" 
                  Text="{Binding Text}"/>
         </StackPanel>
