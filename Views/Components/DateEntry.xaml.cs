@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.IdentityModel.Tokens;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -31,28 +32,39 @@ namespace FYP_Management_System.Views.Components
                 TextBlockLabel.Text = value;
             }
         }
-        public string? SelectedDate
+        public object? SelectedDate
         {
             get
             {
-                if(DatePicker1.SelectedDate==null)
-                {
-                    return null;
-                }
-                return  DatePicker1.SelectedDate.Value.Date.ToShortDateString();
+                if (DatePicker1.SelectedDate == null)
+                    return DBNull.Value;
+                return DatePicker1.SelectedDate.Value.Date.ToShortDateString();
             }
             set
             {
                 if (InitialData == null)
                 {
-                    InitialData = value;
+                    InitialData = (string?)value;
                 }
-                DatePicker1.SelectedDate = Convert.ToDateTime(value);
+                if (((string?)value).IsNullOrEmpty())
+                    DatePicker1.SelectedDate = null;
+                else
+                    DatePicker1.SelectedDate = Convert.ToDateTime(value);
             }
         }
         public string InputAttribute { get; set; }
         public bool IsModified { get { return InitialData != SelectedDate; } }
-        public string QueryString { get { return InputAttribute + "=CONVERT(DATETIME,'" + SelectedDate+"',103)"; } }
+        public string QueryString
+        {
+            get
+            {
+                if (SelectedDate == null)
+                {
+                    return InputAttribute + "=NULL ";
+                }
+                return InputAttribute + "=CONVERT(DATETIME,'" + SelectedDate + "',103)";
+            }
+        }
         public string InitialData
         {
             get => initialData.ToString();

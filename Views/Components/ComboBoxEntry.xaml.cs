@@ -53,14 +53,20 @@ namespace FYP_Management_System.Views.Components
                 Items = items;
             }
         }
-        public string SelectedItem
+        public object? SelectedItem
         {
-            get => (string)ComboBox1.SelectedValue;
+            get
+            {
+                if (ComboBox1.SelectedValue==null)
+                    return DBNull.Value;
+                return (string)ComboBox1.SelectedValue;
+            }
+
             set
             {
                 if (InitialData == null)
                 {
-                    InitialData = value;
+                    InitialData = (string?)value;
                 }
                 ComboBox1.SelectedValue = value;
             }

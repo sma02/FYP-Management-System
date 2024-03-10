@@ -36,7 +36,10 @@
                 <Button x:Name="AddButton" FontFamily="Marlett" FontSize="20" Content="5" MinWidth="80px" Click="AddButton_Click"/>
                 <Button x:Name="RemoveButton" FontFamily="Marlett" FontSize="20" Content="6" MinWidth="80px" Click="RemoveButton_Click"/>
             </StackPanel>
-            <Button Grid.Row="4" Content="Back" Click="BackButton_Click"/>
+            <StackPanel Grid.Row="4" Orientation="Horizontal" HorizontalAlignment="Center">
+                <Button x:Name="ConfirmButton" Content="Confirm" Click="ConfirmButton_Click" Visibility="Collapsed"/>
+                <Button Content="Back" Click="BackButton_Click"/>
+            </StackPanel>
         </Grid>
     </Grid>
 </Page>

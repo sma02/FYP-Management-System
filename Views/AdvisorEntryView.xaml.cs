@@ -1,4 +1,5 @@
 ﻿using Microsoft.Data.SqlClient;
+using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -41,7 +42,7 @@ namespace FYP_Management_System.Views
                 SalaryEntry.Text = itemArray[5].ToString().Replace("Rs","");
                 ContactEntry.Text = itemArray[6].ToString();
                 EmailEntry.Text = itemArray[7].ToString();
-                DateEntry.SelectedDate = itemArray[8].ToString();
+                DateEntry.SelectedDate = itemArray[8].ToString().IsNullOrEmpty() ? itemArray[8].ToString():null;
             }
         }
 
@@ -55,8 +56,8 @@ namespace FYP_Management_System.Views
                                                   INSERT INTO Person(FirstName,LastName,Contact,Email,DateofBirth,Gender)
                                                   VALUES(@FirstName,@LastName,@Contact,@Email,@DateofBirth,(SELECT ID FROM Lookup WHERE Value=@Gender));
                                                   DECLARE @RecordId int = scope_identity();
-                                                  INSERT INTO Student(Id,Designation,Salary)
-                                                  VALUES(@RecordId,(SELECT ID FROM Lookup WHERE Value=@Designation),Salary);
+                                                  INSERT INTO Advisor(Id,Designation,Salary)
+                                                  VALUES(@RecordId,(SELECT ID FROM Lookup WHERE Value=@Designation),@Salary)
                                                   COMMIT TRANSACTION;", conn);
                 command.Parameters.AddWithValue("@FirstName", FirstNameEntry.Text);
                 command.Parameters.AddWithValue("@LastName", LastNameEntry.Text);

@@ -75,8 +75,8 @@ namespace FYP_Management_System
             ContentFrame.Content = new Views.CrudManageView(@"SELECT     Advisor.ID 
                                                         ,FirstName
                                                         ,LastName
-                                                        ,l2.Value Designation
-                                                        ,l1.Value Gender
+                                                        ,l1.Value Designation
+                                                        ,(SELECT Value FROM Lookup WHERE Lookup.Id=Gender) Gender
                                                         ,CONVERT(VARCHAR,Salary) + 'Rs' Salary
                                                         ,Contact
                                                         ,Email
@@ -85,9 +85,7 @@ namespace FYP_Management_System
                                                   JOIN Advisor 
                                                   ON Advisor.ID=Person.ID AND LEFT(FirstName,1)<>'$'
                                                   JOIN Lookup l1
-                                                  ON Gender=l1.Id AND l1.Category='GENDER'
-                                                  JOIN Lookup l2
-                                                  ON Designation=l2.Id AND l2.Category='DESIGNATION'"
+                                                  ON Designation=l1.Id AND l1.Category='DESIGNATION'"
                                        ,
                                       @"UPDATE Person SET FirstName = '$' + FirstName WHERE Id = @Id"
                                       ,
@@ -97,20 +95,63 @@ namespace FYP_Management_System
 
         private void BtnManageGroups_Click(object sender, RoutedEventArgs e)
         {
-            ContentFrame.Content = new Views.ManageGroupView("2");
-
+            // ContentFrame.Content = new Views.ManageGroupView();
+            ContentFrame.Content =  new CrudManageView(@"SELECT [Group].Id
+                                                         	, Project.Title
+                                                         	,(SELECT CONCAT(FirstName,' ',LastName)
+                                                         	  FROM ProjectAdvisor 
+                                                         	  JOIN Person 
+                                                         	  ON Person.Id=ProjectAdvisor.AdvisorId 
+                                                         	  WHERE ProjectAdvisor.AdvisorRole=(SELECT Id FROM Lookup WHERE Value='Main Advisor')
+															  	AND GroupProject.ProjectId=ProjectAdvisor.ProjectId) [Main Advisor]
+                                                         	 ,(SELECT CONCAT(FirstName,' ',LastName)
+                                                         	  FROM ProjectAdvisor 
+                                                         	  JOIN Person 
+                                                         	  ON Person.Id=ProjectAdvisor.AdvisorId 
+                                                         	  WHERE ProjectAdvisor.AdvisorRole=(SELECT Id FROM Lookup WHERE Value='Co-Advisror')
+																AND GroupProject.ProjectId=ProjectAdvisor.ProjectId) [Co-Advisor]
+                                                         	 ,(SELECT CONCAT(FirstName,' ',LastName)
+                                                         	  FROM ProjectAdvisor 
+                                                         	  JOIN Person 
+                                                         	  ON Person.Id=ProjectAdvisor.AdvisorId 
+                                                         	  WHERE ProjectAdvisor.AdvisorRole=(SELECT Id FROM Lookup WHERE Value='Industry Advisor')
+																AND GroupProject.ProjectId=ProjectAdvisor.ProjectId) [Industry Advisor]
+															                                                     	  ,(SELECT STUFF((SELECT ', ' +Student.RegistrationNo
+                                                         			                     FROM GroupStudent
+                                                         			                     JOIN Student
+                                                         			                     ON Student.Id=GroupStudent.StudentId
+                                                         			                     WHERE g.GroupId=GroupStudent.GroupId 
+                                                         								 AND GroupStudent.Status=(SELECT Id FROM Lookup WHERE Lookup.Value='Active')
+                                                         			                     FOR XML PATH('')),1,1,'') [Registration Numbers]
+                                                                                          FROM GroupStudent g
+                                                         								 WHERE g.GroupId=[Group].Id
+                                                                                          GROUP BY g.GroupId) [Registration Numbers]
+                                                         FROM [Group]
+                                                         JOIN GroupProject
+                                                         ON GroupProject.GroupId=[Group].Id
+                                                         JOIN Project
+                                                         ON Project.Id=GroupProject.ProjectId", null, typeof(GroupEntryView), new List<string> { "[Registration Numbers]" });
         }
 
         private void BtnManageStudentGroups_Click(object sender, RoutedEventArgs e)
         {
-            ContentFrame.Content = new CrudManageView(@"SELECT GroupId,STUFF((SELECT ', ' +Student.RegistrationNo
-			                     FROM GroupStudent
-			                     JOIN Student
-			                     ON Student.Id=GroupStudent.StudentId
-			                     WHERE g.GroupId=GroupStudent.GroupId AND GroupStudent.Status=(SELECT Id FROM Lookup WHERE Lookup.Value='Active')
-			                     FOR XML PATH('')),1,1,'') [Registration Numbers]
-                                 FROM GroupStudent g
-                                 GROUP BY g.GroupId", null, typeof(StudentGroupEntryView),new List<string>{ "[Registration Numbers]" },CanAdd: false);
+            ContentFrame.Content = new CrudManageView(@"SELECT [Group].Id
+                                                         	, Project.Title
+                                                         	,(SELECT STUFF((SELECT ', ' +Student.RegistrationNo
+                                                         			                     FROM GroupStudent
+                                                         			                     JOIN Student
+                                                         			                     ON Student.Id=GroupStudent.StudentId
+                                                         			                     WHERE g.GroupId=GroupStudent.GroupId 
+                                                         								 AND GroupStudent.Status=(SELECT Id FROM Lookup WHERE Lookup.Value='Active')
+                                                         			                     FOR XML PATH('')),1,1,'') [Registration Numbers]
+                                                                                          FROM GroupStudent g
+                                                         								 WHERE g.GroupId=[Group].Id
+                                                                                          GROUP BY g.GroupId) [Registration Numbers]
+                                                         FROM [Group]
+                                                         JOIN GroupProject
+                                                         ON GroupProject.GroupId=[Group].Id
+                                                         JOIN Project
+                                                         ON Project.Id=GroupProject.ProjectId", null, typeof(StudentGroupEntryView),new List<string>{ "[Registration Numbers]" },CanAdd: false);
 
         }
 

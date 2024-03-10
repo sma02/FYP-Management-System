@@ -1,0 +1,132 @@
+﻿<Page x:Class="FYP_Management_System.Views.GroupEntryView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:FYP_Management_System.Views"
+             xmlns:Components="clr-namespace:FYP_Management_System.Views.Components"
+             mc:Ignorable="d" 
+             d:DesignHeight="3000" d:DesignWidth="800"
+             Background="{DynamicResource BackgroundColor}">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="60px"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <TextBlock Background="{DynamicResource BackgroundColorBar}"
+                   Text="Manage Group :"
+                   FontSize="20px"
+                   Padding="20"
+                   Foreground="{DynamicResource TextColor}"
+                   VerticalAlignment="Center"/>
+        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Visible">
+            <Grid  Background="{DynamicResource BackgroundColor3}"
+               Grid.Row="1" ScrollViewer.CanContentScroll="True">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="500px"/>
+                    <RowDefinition x:Name="AdvisorsRow" Height="1000px"/>
+                    <RowDefinition Height="500px"/>
+                    <RowDefinition Height="50px"/>
+                </Grid.RowDefinitions>
+                <Border Grid.Row="0" BorderThickness="1" Background="{DynamicResource Control}" BorderBrush="{DynamicResource Control}" CornerRadius="16" Margin="10">
+                    <Grid Margin="20">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="40px"/>
+                            <RowDefinition Height="50px"/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <Components:DataLabel FontSize="18px" TextLabel="Select Project"/>
+                        <StackPanel Grid.Row="1" Margin="20 5">
+                            <Components:DataLabel FontSize="15px" x:Name="ProjectIdLabel" TextLabel="Project Id: "/>
+                            <Components:DataLabel FontSize="15px" x:Name="ProjectTitleLabel" TextLabel="Project Title: "/>
+                        </StackPanel>
+                        <DataGrid x:Name="ProjectDataGrid" Grid.Row="2" IsReadOnly="True" SelectionMode="Single" SelectionChanged="ProjectDataGrid_SelectionChanged">
+                        </DataGrid>
+                    </Grid>
+                </Border>
+                <Border Grid.Row="1" BorderThickness="1" x:Name="AdvisorsEntrySection" Background="{DynamicResource Control}" BorderBrush="{DynamicResource Control}" CornerRadius="16" Margin="10">
+                    <Grid Margin="20">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="45px"/>
+                            <RowDefinition Height="300px"/>
+                            <RowDefinition Height="300px"/>
+                            <RowDefinition Height="300px"/>
+                        </Grid.RowDefinitions>
+                        <Components:DataLabel FontSize="18px" TextLabel="Select Project Advisors"/>
+                        <Grid Grid.Row="1">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="30px"/>
+                                <RowDefinition Height="75px"/>
+                                <RowDefinition/>
+                                <RowDefinition Height="50px"/>
+                            </Grid.RowDefinitions>
+                            <StackPanel Grid.Row="1" Margin="20 5">
+                                <Components:DataLabel x:Name="MainAdvisorIdLabel" FontSize="13px" TextLabel="Id: "/>
+                                <Components:DataLabel x:Name="MainAdvisorNameLabel" FontSize="13px" TextLabel="Name: "/>
+                                <Components:DataLabel x:Name="MainAdvisorDesignationLabel" FontSize="13px" TextLabel="Designation: "/>
+                            </StackPanel>
+                            <Components:DataLabel FontSize="16px" TextLabel="Main Advisor"/>
+                            <DataGrid x:Name="MainAdvisorDataGrid" Grid.Row="2" IsReadOnly="True" SelectionMode="Single" SelectionChanged="MainAdvisorDataGrid_SelectionChanged"/>
+   
+                        </Grid>
+                        <Grid Grid.Row="2">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="30px"/>
+                                <RowDefinition Height="75px"/>
+                                <RowDefinition/>
+                                <RowDefinition Height="50px"/>
+                            </Grid.RowDefinitions>
+                            <StackPanel Grid.Row="1" Margin="20 5">
+                                <Components:DataLabel x:Name="CoAdvisorIdLabel" FontSize="13px" TextLabel="Id: "/>
+                                <Components:DataLabel x:Name="CoAdvisorNameLabel" FontSize="13px" TextLabel="Name: "/>
+                                <Components:DataLabel x:Name="CoAdvisorDesignationLabel" FontSize="13px" TextLabel="Designation: "/>
+                            </StackPanel>
+                            <Components:DataLabel FontSize="16px" TextLabel="Co Advisor"/>
+                            <DataGrid x:Name="CoAdvisorDataGrid" Grid.Row="2" IsReadOnly="True" SelectionMode="Single" SelectionChanged="CoAdvisorDataGrid_SelectionChanged"/>
+
+                        </Grid>
+                        <Grid Grid.Row="3">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="30px"/>
+                                <RowDefinition Height="75px"/>
+                                <RowDefinition/>
+                                <RowDefinition Height="50px"/>
+                            </Grid.RowDefinitions>
+                            <StackPanel Grid.Row="1" Margin="20 5">
+                                <Components:DataLabel x:Name="IndustryAdvisorIdLabel" FontSize="13px" TextLabel="Id: "/>
+                                <Components:DataLabel x:Name="IndustryAdvisorNameLabel" FontSize="13px" TextLabel="Name: "/>
+                                <Components:DataLabel x:Name="IndustryAdvisorDesignationLabel" FontSize="13px" TextLabel="Designation: "/>
+                            </StackPanel>
+                            <Components:DataLabel FontSize="16px" TextLabel="Industry Advisor"/>
+                            <DataGrid x:Name="IndustryAdvisorDataGrid" Grid.Row="2" IsReadOnly="True" SelectionMode="Single" SelectionChanged="IndustryAdvisorDataGrid_SelectionChanged"/>
+
+                        </Grid>
+                    </Grid>
+                </Border>
+                <Border Grid.Row="2" BorderThickness="1" Background="{DynamicResource Control}" BorderBrush="{DynamicResource Control}" CornerRadius="16" Margin="10">
+                    <Grid Margin="20">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="80px"/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <StackPanel Grid.Row="0">
+                            <Button Content="Add Student Group" x:Name="AddStudentsGroup" Height="35px" Click="AddStudentsGroup_Click"/>
+                            <Components:DataLabel FontSize="15px" TextLabel="Currently Present Students : "/>
+                        </StackPanel>
+                        <DataGrid x:Name="StudentsGroupDataGrid" Grid.Row="1" IsReadOnly="True" SelectionMode="Single">
+                        </DataGrid>
+                    </Grid>
+                </Border>
+
+            <Grid Grid.Row="4">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Button x:Name="AddButton" Content="Add" Grid.Row="2" Click="AddButton_Click"/>
+                <Button Content="Cancel" Grid.Row="2" Grid.Column="1" Click="CancelButton_Click"/>
+            </Grid>
+            </Grid>
+        </ScrollViewer>
+    </Grid>
+</Page>

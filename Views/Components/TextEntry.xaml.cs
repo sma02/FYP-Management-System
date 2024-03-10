@@ -30,31 +30,35 @@ namespace FYP_Management_System.Views.Components
                 TextBlockLabel.Text = value;
             }
         }
-        public string? Text
+        public object? Text
         {
 
             get {
                 if (TextBoxText.Text.Length==0 || TextBoxText.Text.Trim().Length==0)
                 {
-                    return null;
+                    return DBNull.Value;
                 }
                 return TextBoxText.Text.Trim(); }
             set
             {
                 if(InitialData == null)
                 {
-                    InitialData = value;
+                    InitialData = (string?)value;
                 }
-                TextBoxText.Text = value;
+                TextBoxText.Text = (string)value;
             }
         }
         public string InputAttribute { get; set; }
         public bool IsModified { get { return InitialData != Text; } }
         public string QueryString { get {
-                string text = Text;
-                if (text.Contains('\''))
-                    text = text.Replace("'", "''");
-                return InputAttribute + "='" + text + "'"; } }
+                object text = Text;
+                if(text==DBNull.Value)
+                {
+                    return InputAttribute + "=NULL ";
+                }
+                if (((string)text).Contains('\''))
+                    text = ((string)text).Replace("'", "''");
+                return InputAttribute + "='" + ((string)text) + "'"; } }
         public string? InitialData
         {
             get => initialData;

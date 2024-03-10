@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.IdentityModel.Tokens;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Configuration;
@@ -14,6 +15,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace FYP_Management_System.Views.Components
 {
@@ -22,22 +24,54 @@ namespace FYP_Management_System.Views.Components
     /// </summary>
     public partial class DataLabel : UserControl,INotifyPropertyChanged
     {
-        private string textData;
-        private string textLabel;
-
+        private string? textData;
+        private string? textLabel;
+        private string initialData = null;
         public event PropertyChangedEventHandler? PropertyChanged;
 
-        public string TextData
+        public object? TextData
         {
-            get => textData; 
+            get
+            {
+                if (textData.IsNullOrEmpty())
+                {
+                    return DBNull.Value;
+                }
+                return textData;
+            }
+
             set
             {
-                textData = value;
+                textData = (string?)value;
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(TextData)));
             }
         }
-
-        public string TextLabel
+        public string InputAttribute { get; set; }
+        public bool IsModified { get { return InitialData != TextData; } }
+        public string QueryString
+        {
+            get
+            {
+                object text = TextData;
+                if (text == DBNull.Value)
+                {
+                    return InputAttribute + "=NULL ";
+                }
+                if (((string)text).Contains('\''))
+                    text = ((string)text).Replace("'", "''");
+                return InputAttribute + "='" + ((string)text) + "'";
+            }
+        }
+        public string? InitialData
+        {
+            get => initialData;
+            set
+            {
+                initialData = value;
+                TextData = value;
+            }
+        }
+        public string? TextLabel
         {
             get => textLabel; set
             {
