@@ -47,7 +47,6 @@
             </Grid.ColumnDefinitions>
             <GridSplitter Grid.Column="1" HorizontalAlignment="Stretch" Background="{DynamicResource BackgroundColor3}"/>
             <StackPanel Margin="0 10 2 0">
-                <Button  Name="BtnDashboard" Style="{DynamicResource SideBarButton}" Content="Dashboard" Click="BtnDashboard_Click"/>
                 <Button  Name="BtnManageStudents" Style="{DynamicResource SideBarButton}" Content="Manage Students" Click="BtnManageStudents_Click"/>
                 <Button  Name="BtnManageProjects" Style="{DynamicResource SideBarButton}" Content="Manage Projects" Click="BtnManageProjects_Click"/>
                 <Button  Name="BtnManageAdvisors" Style="{DynamicResource SideBarButton}" Content="Manage Advisors" Click="BtnManageAdvisors_Click"/>
@@ -55,6 +54,7 @@
                 <Button  Name="BtnMarkEvaluations" Style="{DynamicResource SideBarButton}" Content="Mark Evaluations" Click="BtnMarkEvaluations_Click"/>
                 <Button  Name="BtnManageGroups" Style="{DynamicResource SideBarButton}" Content="Manage Groups" Click="BtnManageGroups_Click"/>
                 <Button  Name="BtnManageStudentGroups" Style="{DynamicResource SideBarButton}" Content="Manage Student's Groups" Click="BtnManageStudentGroups_Click"/>
+                <Button  Name="BtnReports" Style="{DynamicResource SideBarButton}" Content="Report Generation" Click="BtnReports_Click"/>
             </StackPanel>
             <Frame Name="ContentFrame" Grid.Column="2" NavigationUIVisibility="Hidden" />
         </Grid>

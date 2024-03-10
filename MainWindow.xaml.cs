@@ -55,12 +55,6 @@ namespace FYP_Management_System
         private void BtnDashboard_Click(object sender, RoutedEventArgs e)
         {
         }
-
-        private void BtnAddStudent_Click(object sender, RoutedEventArgs e)
-        {
-            ContentFrame.Content = new Views.Components.StudentEntryView();
-        }
-
         private void BtnManageProjects_Click(object sender, RoutedEventArgs e)
         {
             ContentFrame.Content = new Views.CrudManageView(@"SELECT Id,Title,Description
@@ -130,7 +124,17 @@ namespace FYP_Management_System
                                                          JOIN GroupProject
                                                          ON GroupProject.GroupId=[Group].Id
                                                          JOIN Project
-                                                         ON Project.Id=GroupProject.ProjectId", null, typeof(GroupEntryView), new List<string> { "[Registration Numbers]" });
+                                                         ON Project.Id=GroupProject.ProjectId"
+                                                         , @"DELETE FROM GroupEvaluation
+                                                             WHERE GroupEvaluation.GroupId=@Id;
+                                                             DELETE FROM GroupProject
+                                                             WHERE GroupProject.GroupId=@Id;
+                                                             DELETE FROM GroupStudent
+                                                             WHERE GroupStudent.GroupId=@Id;
+                                                             DELETE FROM [Group]
+                                                             WHERE [Group].Id=@Id;"
+                                                         , typeof(GroupEntryView)
+                                                         , new List<string> { "[Registration Numbers]" });
         }
 
         private void BtnManageStudentGroups_Click(object sender, RoutedEventArgs e)
@@ -160,7 +164,9 @@ namespace FYP_Management_System
             ContentFrame.Content = new CrudManageView(@"SELECT *
                                                         FROM Evaluation
                                                         WHERE LEFT(Name,1)<>'$'"
-                                                        , @"UPDATE Evaluation SET Name = '$' + Name WHERE Id = @Id"
+                                                        , @"UPDATE Evaluation SET Name = '$' + Name WHERE Id = @Id;
+                                                            DELETE FROM GroupEvaluation
+                                                            WHERE GroupEvaluation.EvaluationId=@Id"
                                                         , typeof(EvaluationEntryView)
                                                         , new List<string> { "Name" });
         }
@@ -219,6 +225,11 @@ namespace FYP_Management_System
                                                           WHERE GroupId=@GroupId AND EvaluationId=@Id" 
                                                        ,typeof(EvaluationMarkingEntryView)
                                                        , new List<string> { "Name" });
+        }
+
+        private void BtnReports_Click(object sender, RoutedEventArgs e)
+        {
+            ContentFrame.Content = new ReportsGenerationView();
         }
     }
 }

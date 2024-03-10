@@ -314,7 +314,11 @@ namespace FYP_Management_System.Views
                 }
                 if (ProjectIdLabel.TextData != DBNull.Value)
                 {
-                    if (MainAdvisorIdLabel.IsModified)
+                    if(ProjectIdLabel.IsModified && ProjectIdLabel.InitialData!=null)
+                    {
+                        Utils.ExecuteQuery(@"DELETE FROM ProjectAdvisor WHERE ProjectAdvisor.ProjectId=" + ProjectIdLabel.InitialData);
+                    }
+                    if (MainAdvisorIdLabel.IsModified || ProjectIdLabel.IsModified)
                     {
                         if (MainAdvisorIdLabel.InitialData == null)
                             query += @"INSERT INTO ProjectAdvisor(AdvisorId,AdvisorRole,ProjectId,AssignmentDate)
@@ -348,12 +352,15 @@ namespace FYP_Management_System.Views
                                      AND ProjectId=" + ProjectIdLabel.TextData + ";";
                     }
                 }
+                Utils.ExecuteQuery(query);
             }
+            UpdateNeeded?.Invoke(this, EventArgs.Empty);
+            NavigationService.GoBack();
         }
 
         private void CancelButton_Click(object sender, RoutedEventArgs e)
         {
-
+            NavigationService.GoBack();
         }
     }
 }

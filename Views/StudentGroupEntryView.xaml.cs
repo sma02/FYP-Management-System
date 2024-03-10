@@ -84,7 +84,7 @@ namespace FYP_Management_System.Views
                 DataRowView selectedItem = (DataRowView)AvailableStudentsDataGrid.SelectedItem;
                 if (provisionalMode == false)
                 {
-                    SqlDataReader reader = Utils.ReadData("SELECT CONVERT(bit,COUNT(1)) FROM GroupStudent WHERE StudentId=" + selectedItem.Row.ItemArray[0].ToString());
+                    SqlDataReader reader = Utils.ReadData("SELECT CONVERT(bit,COUNT(1)) FROM GroupStudent WHERE StudentId=" + selectedItem.Row.ItemArray[0].ToString() + "AND GroupId="+groupId.ToString());
                     reader.Read();
                     if (reader.GetBoolean(0))
                     {
