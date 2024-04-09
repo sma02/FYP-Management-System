@@ -9,7 +9,7 @@ namespace FYP_Management_System
 {
     class Configuration
     {
-        String ConnectionStr = @"Data Source=(local);Initial Catalog=ProjectA;Integrated Security=True; Encrypt=False";
+        String ConnectionStr = @"Data Source=(local);Initial Catalog=ProjectADB;Integrated Security=True; Encrypt=False";
         SqlConnection con;
         private static Configuration _instance;
         public static Configuration getInstance()
